@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Website</title>
+   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+#header {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  } 
+  
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    position: fixed;       /* 👈 Fixed at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 7%;
+    z-index: 1000;        
+  }
+  
+  .logo {
+    width: 140px;
+  }
+  
+  nav ul li{
+    display:inline-block;
+    list-style: none;
+    margin: 10px 20px;
+  }
+  nav ul li a{
+    color: #b40b0b;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 15px;
+    position: relative;
+  }
+  nav ul li a::after{
+    content: '';
+    width: 0;
+    height:3px;
+    background: #444;
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    transition: 0.5s;
+  }
+  nav ul li a:hover::after{
+    width:100%;
+  }
+  
+/* Hero Section */
+/* Hero Section with Zoom Animation */
+.hero {
+width: 100%;
+height: 80vh;
+background: url('images/img15-pro.jpg') center top/cover no-repeat;
+display: flex;
+align-items: center;
+padding-left: 5%;
+color: rgb(25, 12, 27);
+animation: zoomInOut 4s infinite ease-in-out;
+}
+
+@keyframes zoomInOut {
+0%, 100% {
+transform: scale(1);
+}
+50% {
+transform: scale(1.05);
+}
+}
+
+
+.hero-content {
+    max-width: 400px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.hero p {
+    font-size: 1.2rem;
+}
+/*-----------------------Wave after hero section-----*/
+
+
+/*------------------wave below header------------------*/
+/* Bottom Wave Container Animation */
+.custom-shape-divider-bottom-1743045261 {
+    position: absolute;
+    bottom: -50px; /* Adjusted to move it up */
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+  }
+  .custom-shape-divider-bottom-1743045261 {
+      position: absolute;
+      bottom: -50px;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      z-index: 1;
+    }
+    
+    .custom-shape-divider-bottom-1743045261 svg {
+      display: block;
+      width: calc(134% + 1.3px);
+      height: 175px;
+      animation: bottomWaveFlow 8s ease-in-out infinite alternate;
+    }
+    
+    .custom-shape-divider-bottom-1743045261 .shape-fill {
+      fill: #c06d6d;
+    }
+    
+    /* Keyframes for wave flow animation */
+    @keyframes bottomWaveFlow {
+      0% {
+        transform: translateX(0px) scaleX(1);
+      }
+      100% {
+        transform: translateX(-30px) scaleX(1.01);
+      }
+    }
+    #bg-color-blend {
+      height: 75vh;
+      width: 100%;
+      background-color: #c06d6d;
+      position: relative;
+  }
+    
+
+/* Upper Body, Lower Body, Yoga Section */
+.lower-section {
+    background: #f8deb6;
+    padding: 60px 10%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.box {
+    flex: 1;
+    padding: 30px;
+    color: rgb(54, 43, 43);
+    text-align: center;
+    border-radius: 25px 50px 25px 50px;
+    margin: 0 10px;
+    cursor: pointer;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    display: block;
+}
+
+.box:hover {
+    transform: scale(1.05);
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.box h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.box:nth-child(1) {
+    background: linear-gradient(135deg, #e4bdbd, #dfc182);
+}
+
+.box:nth-child(2) {
+    background: linear-gradient(135deg, #e4bdbd, #dfc182);
+}
+
+.box:nth-child(3) {
+    background: linear-gradient(135deg, #e4bdbd, #dfc182);
+}
+
+/* Quote & Image Section */
+
+/* Quote & Image Section */
+/* Quote & Image Section */
+
+
+@keyframes typing {
+from {
+width: 0;
+}
+to {
+width: 100%;
+}
+}
+
+@keyframes blink {
+from, to {
+border-color: transparent;
+}
+50% {
+border-color: #FFC300;
+}
+}
+
+.icon {
+font-size: 2rem;
+margin-right: 10px;
+}
+
+.quote, .quote-img {
+opacity: 0;
+visibility: hidden;
+transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.quote-section.active .quote,
+.quote-section.active .quote-img {
+opacity: 1;
+visibility: visible;
+}
+
+
+/* Quote & Image Section */
+/* Quote & Image Section */
+.quote-section {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 50px 10%;
+background: #f8deb6;
+color: black;
+position: relative;
+}
+
+/* Zoom In and Out Animation */
+@keyframes zoomInOut {
+0%, 100% {
+transform: scale(1);
+}
+50% {
+transform: scale(1.05);
+}
+}
+
+/* Quote Section with Zoom Animation */
+.quote {
+font-size: 2rem;
+font-weight: bold;
+width: 50%;
+text-align: center;
+line-height: 1.2;
+animation: zoomInOut 3s infinite ease-in-out;
+}
+
+
+.quote-img img {
+width: 500px;
+height: 500px;
+border-radius: 50%;
+object-fit: cover;
+}
+
+
+@keyframes pulse {
+0%, 100% {
+transform: scale(1);
+box-shadow: 0 0 10px rgba(255, 105, 180, 0.6);
+}
+50% {
+transform: scale(1.05);
+box-shadow: 0 0 20px rgba(255, 105, 180, 1);
+}
+}
+
+
+
+ 
+/* Exercises Section */
+.exercise-section {
+    text-align: center;
+    padding: 50px 10%;
+    background:#D19895;
+    color: rgb(10, 4, 4);
+}
+
+.exercise-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.exercise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-content: center;
+}
+
+.exercise-box {
+background: rgb(238, 228, 179);
+padding: 20px;
+border-radius: 50px;
+display: flex;
+flex-direction: column;
+align-items: center;
+text-align: center;
+box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+transition: transform 0.3s;
+border: 3px solid rgb(247, 205, 205); /* Added black border to outer body */
+}
+
+
+.exercise-box:hover {
+    transform: scale(1.05);
+}
+
+.exercise-box img {
+    width: 50%;
+height: 80%;
+flex-grow: 1;
+object-fit: cover;
+margin-bottom: 10px;
+}
+
+.exercise-box h3 {
+    font-size: 1.2rem;
+}
+
+
+
+/*-----Footer----------*/
+footer {
+  background-color: #c06d6d;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+    .lower-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    .box {
+        margin: 10px 0;
+    }
+    .hero {
+        padding-left: 10%;
+        text-align: left;
+    }
+    .quote-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    .quote {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .exercise-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+   </style>
+</head>
+<body>
+    <div id="header">   
+        <div class="container">
+          <nav>
+            <img src="images/mainlogo.png" alt="Fitmax" class="logo">
+            <ul>
+              <li><a href="Home.html"> Home </a></li>
+              <li><a href="Exercises.html"> Exercises </a></li>
+              <li><a href="Diet.html"> Diet tracker </a></li>
+              <li><a href="Aboutus.html"> About us </a></li>
+              <li><a href="#"> Profile </a></li>
+              <li><a href="Login.html"> Login </a></li>
+            </ul>
+          </nav>  
+        </div>
+    </div>
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Get fit with us</h1>
+            <p>Pilates, Yoga, Fitness, Spinning & more</p>
+        </div>
+    </div>
+    <!---Wave after hero section----->
+       <!-- https://www.shapedivider.app/ -->
+       <div class="custom-shape-divider-bottom-1743045261">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+        </svg>
+      </div>
+    <!-- Exercise Section -->
+    <div class="exercise-section">
+        <div class="exercise-grid">
+            <div class="exercise-box">
+                <img src="https://media.istockphoto.com/id/1131508527/vector/exercise-guide-by-woman-doing-squat-jump-in-3-steps-in-side-view.jpg?s=612x612&w=0&k=20&c=08_5RXKlcd-R8OiX-cO7DYmSNJ2ubY4JZO-2JgmPklw=" alt="Jump Squat">
+                <h3>Biceps</h3>
+            </div>
+            <div class="exercise-box">
+                <img src="https://www.shutterstock.com/image-vector/exercise-guide-by-man-doing-260nw-2287823987.jpg" alt="Jump Squat">
+                <h3>Triceps</h3>
+            </div>
+            <div class="exercise-box">
+                <img src="https://media.istockphoto.com/id/1147316374/vector/exercise-guide-with-woman-doing-the-squat-thrust-burpee-position-in-3-step.jpg?s=612x612&w=0&k=20&c=QZljFJziQhGyooGIKwXNvqQBqU1YNh8Wfme-w6n_Ofw=" alt="Jump Squat">
+                <h3>Shoulders</h3>
+            </div>
+            <div class="exercise-box">
+                <img src="https://media.istockphoto.com/id/578104104/vector/step-to-instruction-in-push-up.jpg?s=612x612&w=0&k=20&c=AYSyhYJB-98AZL2Euig4fygTjdxliyE8TWHGfXNO6go=" alt="Jump Squat">
+                <h3>Chest</h3>
+            </div>
+            <div class="exercise-box">
+                <img src="https://t3.ftcdn.net/jpg/04/62/80/16/360_F_462801646_G0ioNWYiZ5PMLsb5QvQW8taMG5mZfbbU.jpg" alt="Jump Squat">
+                <h3>Back</h3>
+            </div>
+            <div class="exercise-box">
+                <img src="https://as1.ftcdn.net/v2/jpg/04/37/51/42/1000_F_437514212_QPY8l377O4Wq2TucWqY4BjOwg2OQPbef.jpg" alt="Jump Squat">
+                <h3>Glutes & Hip Flexors</h3>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Quote & Image Section -->
+    <!-- Quote & Image Section -->
+<div class="quote-section">
+    <div class="quote">
+        <span class="icon">💪</span>
+        Push harder than yesterday if you want a different tomorrow.
+        <span class="icon">✨</span>
+    </div>
+    <div class="quote-img">
+        <img src="images/img51-pro.png" alt="Yoga Pose">
+    </div>
+</div>
+<!-- Lower Section -->
+<div class="lower-section">
+    <a href="upper-body.html" class="box">
+        <h2>UPPER BODY</h2>
+        <p>Build strength and tone your upper body.</p>
+    </a>
+    <a href="lower-body.html" class="box">
+        <h2>LOWER BODY</h2>
+        <p>Work on your legs and core strength.</p>
+    </a>
+    <a href="yoga.html" class="box">
+        <h2>YOGA</h2>
+        <p>Improve flexibility and relaxation.</p>
+    </a>
+</div>
+<footer>
+    &copy; 2025 Diet Tracker. All rights reserved.
+  </footer>
+
+    
+    <script>
+        const quoteSection = document.querySelector('.quote-section');
+
+        quoteSection.addEventListener('mouseover', function() {
+            quoteSection.classList.add('active');
+        });
+    </script>
+</body>
+</html>

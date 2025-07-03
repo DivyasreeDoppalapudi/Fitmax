@@ -1,0 +1,521 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f7dbd9;
+            color: black;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+        #header {
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 7%;
+            z-index: 1000;
+        }
+
+        .logo {
+            width: 140px;
+        }
+
+        nav ul li {
+            display: inline-block;
+            list-style: none;
+            margin: 10px 20px;
+        }
+
+        nav ul li a {
+            color: #b40b0b;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 15px;
+            position: relative;
+        }
+
+        nav ul li a::after {
+            content: '';
+            width: 0;
+            height: 3px;
+            background: #444;
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            transition: 0.5s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(255, 0, 43, 0.01) 0%, rgba(255, 0, 43, 0.01) 100%), url('images/img15-pro.png') no-repeat;
+            background-size: 100% 100%, 100%;
+            background-position: center, 70% 60%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(25, 12, 27);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            text-align: center;
+            animation: zoomInOut 4s infinite ease-in-out;
+        }
+
+        .hero h1 {
+            font-size: 7rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: #980b0b;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+            color: #000000;
+            margin-top: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @keyframes zoomInOut {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Wave after Hero Section */
+        .wah {
+            position: relative;
+            width: 100%;
+            overflow: visible;
+            line-height: 0;
+            transform: rotate(180deg);
+            z-index: 0;
+        }
+
+        .wah svg {
+            position: relative;
+            display: block;
+            width: calc(137% + 1.3px);
+            height: 92px;
+        }
+
+        .wah .shape-fill {
+            fill: rgba(240, 50, 82, 0.8);
+        }
+
+        /* Exercise Section */
+        .exercise-section {
+            text-align: center;
+            padding: 80px 15%;
+            background: rgba(240, 50, 82, 0.8);
+            color: rgb(10, 4, 4);
+        }
+
+        .exercise-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .exercise-header h2 {
+            font-size: 36px;
+            margin: 0;
+            color: #fff;
+        }
+
+        .view-all-button {
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .view-all-button:hover {
+            transform: translateY(-3px);
+        }
+
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .exercise-box {
+            font-weight: bold;
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+            border: 3px solid rgb(247, 205, 205);
+            text-decoration: none;
+            color: inherit;
+            height: 260px;
+        }
+
+        .exercise-box:hover {
+            transform: scale(1.05);
+        }
+
+        .exercise-box img {
+            width: 80%;
+            height: 80%;
+            flex-grow: 1;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .exercise-box h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        /* Wave after Exercise Section */
+        .wae {
+            position: relative;
+            width: 100%;
+            overflow: visible;
+            line-height: 0;
+            transform: rotate(180deg);
+            z-index: 0;
+            background-color: rgba(240, 50, 82, 0.8);
+        }
+
+        .wae svg {
+            position: relative;
+            display: block;
+            width: calc(137% + 1.3px);
+            height: 92px;
+        }
+
+        .wae .shape-fill {
+            fill: #f7dbd9;
+        }
+
+        /* Calorie Calculator Section */
+        .container {
+            max-width: 1280px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2rem;
+            box-sizing: border-box;
+            background-color: #f7dbd9;
+        }
+
+        @media (max-width: 767px) {
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem;
+            }
+        }
+
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 2rem;
+            padding-right: 1.5rem;
+        }
+
+        .heading {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #b40b0b;
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .heading {
+                font-size: 2.25rem;
+            }
+        }
+
+        .description {
+            color: #374151;
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .calculator-card {
+            background-color: #FFFFFF;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            max-width: 500px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .right-column {
+            display: flex;
+            align-items: center;
+            min-height: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #D1D5DB;
+            border-radius: 0.375rem;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #b40b0b;
+            box-shadow: 0 0 0 2px rgba(180, 11, 11, 0.5);
+        }
+
+        .weight-unit-select {
+            margin-left: 0.5rem;
+            padding: 0.5rem;
+            border: 1px solid #D1D5DB;
+            border-radius: 0.375rem;
+        }
+
+        .weight-unit-select:focus {
+            outline: none;
+            border-color: #b40b0b;
+            box-shadow: 0 0 0 2px rgba(180, 11, 11, 0.5);
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+        }
+
+        .calculate-button {
+            width: 100%;
+            background-color: #b40b0b;
+            color: #FFFFFF;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .calculate-button:hover {
+            background-color: #E60026;
+        }
+
+        .result {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .error-text {
+            color: #b40b0b;
+        }
+
+        .note {
+            text-align: center;
+            color: #4B5563;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+/* wac*/
+.wac {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+  line-height: 0;
+  transform: rotate(180deg);
+  z-index: 1;
+  background-color:#f7dbd9;
+}
+
+.wac svg {
+  position: relative;
+  display: block;
+  width: calc(137% + 1.3px);
+  height: 92px;
+}
+
+.wac .shape-fill {
+  fill:#eba8a3;
+}
+/* Lower Section Header */
+/* Workout Wrapper */
+.workout-wrapper {
+    padding: 100px 5% 4rem 5%;
+    background-color: #eba8a3;
+}
+
+/* Lower Section Header */
+.lower-section-header {
+    background: #eba8a3;
+    text-align: left;
+    margin-bottom: 20px;
+    padding-left: 5%;
+}
+
+.lower-section-header h2 {
+    font-size: 36px;
+    color: #444;
+}
+
+/* Lower Section */
+.lower-section {
+    background: #eba8a3;
+    padding: 40px 5%;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Individual Category Boxes */
+.category-box {
+    flex: 1;
+    min-width: 250px;
+    background-color: #fff4f0;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.category-box:hover {
+    transform: translateY(-10px);
+    background-color: rgba(252, 9, 9, 0.3);
+}
+
+/* Box Headings */
+.category-box h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #b40b0b;
+    text-align: center;
+}
+
+/* Box Descriptions */
+.category-box p {
+    font-size: 16px;
+    color: #444;
+    text-align: center;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .lower-section {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 5%;
+    }
+
+    .category-box {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .lower-section-header {
+        text-align: center;
+        padding-left: 0;
+    }
+}
+
+        /* Footer */
+        footer {
+            background-color: #b40b0b;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .lower-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .category-box {
+                margin: 10px 0;
+            }
+            .hero {
+                padding-left: 10%;
+                text-align: left;
+            }
+            .exercise-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .lower-section-header {
+                padding-left: 15px;
+            }
+        }

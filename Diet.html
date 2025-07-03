@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculators - Diet Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f7dbd9;
+        color: #b40b0b;
+      }
+
+      /* ---------------- Header/Navbar ---------------- */
+      #navbar {
+        width: 100%;
+        position: relative;
+        z-index: 1000;
+        background: #fff;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 10px 7%;
+        box-sizing: border-box;
+        z-index: 1000;
+      }
+
+      .logo {
+        width: 140px;
+      }
+
+      nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav ul li {
+        display: inline-block;
+        list-style: none;
+        margin: 10px 20px;
+      }
+
+      nav ul li a {
+        color: #b40b0b;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 15px;
+        position: relative;
+      }
+
+      nav ul li a::after {
+        content: "";
+        width: 0;
+        height: 3px;
+        background: #444;
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        transition: 0.5s;
+      }
+
+      nav ul li a:hover::after {
+        width: 100%;
+      }
+
+      /* ---------------- Hero Section ---------------- */
+      .hero {
+        background-color: rgba(255, 0, 43, 0.6);
+        color: white;
+        text-align: center;
+        padding-top: 60px;
+        padding-bottom: 60px;
+      }
+
+      .hero-content h1 {
+        font-size: 3em;
+        margin: 0;
+      }
+
+      .hero-content p {
+        font-size: 1.2em;
+        margin-top: 10px;
+      }
+
+      .wah {
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+        background-color: #f7dbd9;
+      }
+
+      .wah svg {
+        position: relative;
+        display: block;
+        width: calc(100% + 1.3px);
+        height: 78px;
+      }
+
+      .wah .shape-fill {
+        fill: #ff002b;
+        fill-opacity: 0.6;
+      }
+
+      /* ---------------- Calculator Section ---------------- */
+      .calculator-section {
+        padding: 60px 20px;
+        max-width: 1000px;
+        margin: auto;
+        text-align: center;
+      }
+
+      .calculator-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 40px;
+      }
+
+      .calculator-box {
+        flex: 1 1 30%;
+        background-color: #f9f9f9;
+        margin: 10px;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        min-width: 200px;
+        max-width: 300px;
+      }
+
+      .calculator-box:hover {
+        transform: scale(1.05);
+      }
+
+      .calculator-box img {
+        width: 100%;
+        height: 120px;
+        object-fit: contain;
+        margin-bottom: 10px;
+      }
+
+      .calculator-box h3 {
+        margin-bottom: 10px;
+        font-size: 1.2em;
+        word-wrap: break-word;
+      }
+
+      /* ---------------- Modals ---------------- */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1001;
+        overflow-y: auto;
+      }
+
+      .modal.show {
+        display: block;
+      }
+
+      .modal-content {
+        background: #f9f9f9;
+
+        margin: 5% auto;
+        padding: 20px;
+        border-radius: 12px;
+        max-width: 800px;
+        position: relative;
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .modal-content button.close {
+        font-size: 20px;
+        position: fixed;
+        width: 50px;
+        top: 10px;
+        right: 70px;
+        background: #b40b0b;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .modal-content button.close:hover {
+        background: #8f4342;
+      }
+
+      .modal-content h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #b40b0b;
+      }
+
+      .modal-content h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .modal-content p {
+        margin-bottom: 15px;
+        color: #444;
+        font-size: 1.1em;
+        line-height: 1.6;
+      }
+
+      .modal-content a {
+        color: #b40b0b;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .modal-content a:hover {
+        text-decoration: underline;
+      }
+
+      .calculator-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .calculator-inputs label {
+        font-weight: bold;
+      }
+
+      .calculator-inputs input,
+      .calculator-inputs select {
+        padding: 8px;
+        border: 1px solid #b40b0b;
+        border-radius: 4px;
+        background: #fff;
+        color: black;
+        width: 100px;
+      }
+
+      .calculator-inputs button {
+        background: #b40b0b;
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .calculator-inputs button:hover {
+        background: #8f4342;
+      }
+
+      .calculator-result {
+        margin-top: 10px;
+        font-weight: bold;
+        color: #b40b0b;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+
+      table thead tr {
+        background: #b40b0b;
+        color: white;
+      }
+
+      table th,
+      table td {
+        padding: 10px;
+        border: 1px solid #f7dbd9;
+        text-align: center;
+        color: #444;
+      }
+      table th {
+        color: white;
+      }
+      footer {
+        background-color: #b40b0b;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 40px;
+      }
+
+      @media (max-width: 768px) {
+        .calculator-grid {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .calculator-box {
+          width: 100%;
+          max-width: 300px;
+        }
+
+        nav ul li {
+          margin: 5px 10px;
+        }
+
+        .hero {
+          padding-left: 10%;
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      window.addEventListener("load", function () {
+        const nav = document.querySelector("nav");
+        const hero = document.querySelector(".hero");
+        const navHeight = nav.offsetHeight;
+        hero.style.paddingTop = `${navHeight}px`;
+      });
+
+      window.addEventListener("resize", function () {
+        const nav = document.querySelector("nav");
+        const hero = document.querySelector(".hero");
+        const navHeight = nav.offsetHeight;
+        hero.style.paddingTop = `${navHeight}px`;
+      });
+    </script>
+    <div id="navbar">
+      <nav>
+        <img src="images/mainlogo.png" alt="Fitmaxx" class="logo" />
+        <ul>
+          <li><a href="Home.html">Home</a></li>
+          <li><a href="Exercises.html">Exercises</a></li>
+          <li><a href="Diet.html">Diet tracker</a></li>
+          <li><a href="Aboutus.html">About us</a></li>
+          <li><a href="Profile.html">Profile</a></li>
+          <li><a href="Login.html">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="hero">
+      <div class="hero-content">
+        <h1><b>Diet Tracker: Calculators</b></h1>
+        <p>Track your fitness with precision</p>
+      </div>
+    </div>
+    <div class="wah">
+      <svg
+        data-name="Layer 1"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 120"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+          class="shape-fill"
+        ></path>
+      </svg>
+    </div>
+    <div class="calculator-section">
+      <div class="calculator-grid">
+        <div
+          class="calculator-box"
+          onclick="handleButtonClick('At Home Fitness Test')"
+        >
+          <img src="images/img30-pro.png" alt="Fitness Test" />
+          <h3><b>At Home Fitness Test</b></h3>
+        </div>
+        <div
+          class="calculator-box"
+          onclick="handleButtonClick('Resting and Recovery Heart Calculator')"
+        >
+          <img src="images/img35.jpg" alt="Heart Rate" />
+          <h3><b>Resting & Recovery Heart Rate</b></h3>
+        </div>
+        <div
+          class="calculator-box"
+          onclick="handleButtonClick('Calorie Intake and BMR Calculator')"
+        >
+          <img src="images/img36.jpg" alt="BMR Calculator" />
+          <h3><b>Calorie Intake & BMR</b></h3>
+        </div>
+      </div>
+    </div>
+    <footer>© 2025 Fitmaxx. All rights reserved.</footer>
+
+    <div id="fitnessTestModal" class="modal">
+      <div class="modal-content">
+        <button onclick="closeModal()" class="close">×</button>
+        <section>
+          <h2>At-Home Fitness Test</h2>
+          <p>
+            Looking for an easy and effective way to track your fitness
+            progress? Our at-home fitness test is perfect for you! It’s designed
+            for healthy adult women and provides a comprehensive measure of your
+            strength, endurance, and flexibility.
+          </p>
+          <p>
+            We understand that staying motivated and tracking your progress can
+            be challenging, especially with traditional tools like scales that
+            only provide limited insight. That’s why we created this fitness
+            test – to give you a complete picture of your progress and keep you
+            motivated on your fitness journey.
+          </p>
+          <h2>Fitness Test Interval Timer</h2>
+          <p>
+            Start the fitness test with a 10-minute warm-up routine and rest
+            between each exercise until you are fully recovered. To evaluate
+            your progress, repeat this test every 3 to 4 weeks.
+          </p>
+
+          <h3>1. Upper Body Strength Test</h3>
+          <p>
+            Place your knees on the floor, position the hands below the
+            shoulders, and cross your feet. Start bending the elbows until your
+            chest almost touches the floor and then push back to the starting
+            position. Do as many knee push-ups as you can in 1 minute, and then
+            use the chart below to find out how you rate.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Age</th>
+                <th>20 – 29</th>
+                <th>30 – 39</th>
+                <th>40 – 49</th>
+                <th>50 – 59</th>
+                <th>60+</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Excellent</td>
+                <td>> 49</td>
+                <td>> 40</td>
+                <td>> 35</td>
+                <td>> 30</td>
+                <td>> 20</td>
+              </tr>
+              <tr>
+                <td>Above Average</td>
+                <td>34 – 48</td>
+                <td>25 – 39</td>
+                <td>20 – 34</td>
+                <td>15 – 29</td>
+                <td>5 – 19</td>
+              </tr>
+              <tr>
+                <td>Average</td>
+                <td>17 – 33</td>
+                <td>12 – 24</td>
+                <td>8 – 19</td>
+                <td>6 – 14</td>
+                <td>3 – 4</td>
+              </tr>
+              <tr>
+                <td>Below Average</td>
+                <td>7 – 16</td>
+                <td>5 – 11</td>
+                <td>4 – 7</td>
+                <td>3 – 5</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Poor</td>
+                <td>< 6</td>
+                <td>< 4</td>
+                <td>< 3</td>
+                <td>< 2</td>
+                <td>< 1</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>2. Core Strength Test</h3>
+          <p>
+            Get into a push-up position, with your elbows under your shoulders
+            and your feet hip-width apart. Bend your elbows and rest your weight
+            on your forearms and your toes. Keep your body in a straight line
+            and hold for as long as possible.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Rating</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Excellent</td>
+                <td>> 60 sec</td>
+              </tr>
+              <tr>
+                <td>Average</td>
+                <td>30 – 60 sec</td>
+              </tr>
+              <tr>
+                <td>Poor</td>
+                <td>< 30 sec</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>3. Lower Body Strength Test</h3>
+          <p>
+            Stand up with your feet shoulder-width apart. Bend your knees, press
+            your hips back, and stop the movement once the hip joint is slightly
+            lower than the knees. Press your heels into the floor to return to
+            the initial position. Do as many bodyweight squats as you can in 1
+            minute.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Age</th>
+                <th>20 – 29</th>
+                <th>30 – 39</th>
+                <th>40 – 49</th>
+                <th>50 – 59</th>
+                <th>60+</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Excellent</td>
+                <td>> 29</td>
+                <td>> 26</td>
+                <td>> 23</td>
+                <td>> 20</td>
+                <td>> 17</td>
+              </tr>
+              <tr>
+                <td>Above Average</td>
+                <td>24 – 28</td>
+                <td>21 – 25</td>
+                <td>18 – 22</td>
+                <td>15 – 19</td>
+                <td>12 – 16</td>
+              </tr>
+              <tr>
+                <td>Average</td>
+                <td>21 – 23</td>
+                <td>18 – 20</td>
+                <td>15 – 17</td>
+                <td>12 – 14</td>
+                <td>9 – 11</td>
+              </tr>
+              <tr>
+                <td>Below Average</td>
+                <td>19 – 20</td>
+                <td>16 – 17</td>
+                <td>13 – 14</td>
+                <td>10 – 11</td>
+                <td>7 – 8</td>
+              </tr>
+              <tr>
+                <td>Poor</td>
+                <td>< 18</td>
+                <td>< 15</td>
+                <td>< 12</td>
+                <td>< 9</td>
+                <td>< 6</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            Record your results with our free Fitness Tracker template to track
+            your progress.
+          </p>
+
+          <h3>4. Aerobic Endurance Fitness Test</h3>
+          <p>
+            Place a box or a step in front of you. Step onto the box with your
+            left foot first. Step down and then step back up, this time starting
+            with your right foot. Keep alternating feet for 3 minutes and
+            maintain a steady pace. Once the time is up, immediately take your
+            pulse for one minute.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Age</th>
+                <th>18 – 25</th>
+                <th>26 – 35</th>
+                <th>36 – 45</th>
+                <th>46 – 55</th>
+                <th>56 – 65</th>
+                <th>65+</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Excellent</td>
+                <td>< 81</td>
+                <td>< 80</td>
+                <td>< 84</td>
+                <td>< 91</td>
+                <td>< 92</td>
+                <td>< 92</td>
+              </tr>
+              <tr>
+                <td>Above Average</td>
+                <td>82 – 103</td>
+                <td>81 – 103</td>
+                <td>85 – 106</td>
+                <td>92 – 112</td>
+                <td>93 – 112</td>
+                <td>93 – 115</td>
+              </tr>
+              <tr>
+                <td>Average</td>
+                <td>104 – 110</td>
+                <td>104 – 110</td>
+                <td>107 – 112</td>
+                <td>113 – 118</td>
+                <td>113 – 118</td>
+                <td>116 – 121</td>
+              </tr>
+              <tr>
+                <td>Below Average</td>
+                <td>111 – 121</td>
+                <td>111 – 121</td>
+                <td>113 – 123</td>
+                <td>119 – 125</td>
+                <td>119 – 128</td>
+                <td>122 – 127</td>
+              </tr>
+              <tr>
+                <td>Poor</td>
+                <td>> 122</td>
+                <td>> 122</td>
+                <td>> 124</td>
+                <td>> 126</td>
+                <td>> 129</td>
+                <td>> 128</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>5. Flexibility Fitness Test</h3>
+          <p>
+            Place a box on the floor with a ruler on top. Sit with your legs
+            extended and your feet flexed. Press the soles of the feet against
+            the box, place one hand on top of the other, and then slowly reach
+            forward without bending the knees. Measure how far you can reach,
+            knowing that the edge of the box represents zero flexibility.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Rating</th>
+                <th>cm</th>
+                <th>inches</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Excellent</td>
+                <td>> 21</td>
+                <td>> 8</td>
+              </tr>
+              <tr>
+                <td>Above Average</td>
+                <td>11 – 20</td>
+                <td>5 – 7</td>
+              </tr>
+              <tr>
+                <td>Average</td>
+                <td>1 – 10</td>
+                <td>0.5 – 4</td>
+              </tr>
+              <tr>
+                <td>Below Average</td>
+                <td>0 – -14</td>
+                <td>0 – -4</td>
+              </tr>
+              <tr>
+                <td>Poor</td>
+                <td>< -15</td>
+                <td>< -6</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Additional Resources</h3>
+          <p>
+            Write down your fitness test results on our free template, and keep
+            track of your progress!
+          </p>
+          <h4>Summer Detox Challenge</h4>
+          <p>
+            Our 8-Week Summer Detox Challenge helps you refresh your body and
+            reset your habits.
+          </p>
+
+          <h3>Popular Calculators</h3>
+          <a
+            href="#"
+            onclick="closeModal(); handleButtonClick('Calorie Intake and BMR Calculator')"
+            >Calorie Intake & BMR Calculator</a
+          >
+          <p>
+            The number of calories we burn per day is a combination of our basal
+            metabolic rate (BMR) and our activity level …
+          </p>
+          <a
+            href="#"
+            onclick="closeModal(); handleButtonClick('Resting and Recovery Heart Calculator')"
+            >Resting & Recovery Heart Rate Calculator</a
+          >
+          <p>
+            Measure your resting and recovery heart rates to assess your
+            cardiovascular fitness …
+          </p>
+
+          <h3>Explore Exercises</h3>
+          <p>
+            Explore our range of exercises to boost your fitness journey.
+            <a href="Exercises.html">Visit Exercises</a>
+          </p>
+        </section>
+        <footer>© 2025 Fitmaxx. All rights reserved.</footer>
+      </div>
+    </div>
+
+    <div id="heartRateModal" class="modal">
+      <div class="modal-content">
+        <button onclick="closeModal()" class="close">×</button>
+        <section>
+          <h2>Resting & Recovery Heart Rate Calculator</h2>
+          <p>
+            Regular cardiovascular exercise strengthens not only your heart and
+            lungs but also enhances the flexibility of your blood vessels. These
+            positive changes facilitate the efficient functioning of your
+            cardiovascular system, leading to a more effective pumping of blood
+            with each heartbeat.
+          </p>
+          <p>
+            As a result of this increased efficiency, your heart no longer needs
+            to beat as frequently as it did previously. This leads to a
+            reduction in both your resting heart rate (the number of heartbeats
+            per minute when you are completely at rest) and your recovery rate
+            (the time it takes to return to your resting heart rate after
+            exercising).
+          </p>
+          <p>
+            Discover your true level of fitness and health by following these
+            steps: First, measure your resting and recovery heart rates. Then,
+            input these values into the recovery heart rate calculator provided
+            below.
+          </p>
+
+          <h3>Resting Heart Rate</h3>
+          <p>
+            Measure your resting heart rate when you wake up, just before you
+            get out of bed.
+          </p>
+          <p>
+            Turn the palm of your left hand so that it’s facing up. Place the
+            index and middle fingers of your right hand just below the left
+            wrist on the thumb side. Press the fingers slightly down until you
+            can feel your pulse. Start the timer and count the number of times
+            you feel a throb in 60 seconds.
+          </p>
+          <p>
+            Alternatively, you can also place your index and middle fingers on
+            the side of the neck, just below the jawline. Then check your pulse
+            there.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Age</th>
+                <th>18 – 25</th>
+                <th>26 – 35</th>
+                <th>36 – 45</th>
+                <th>46 – 55</th>
+                <th>56 – 65</th>
+                <th>65+</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Athlete</td>
+                <td>54 – 60</td>
+                <td>54 – 59</td>
+                <td>54 – 59</td>
+                <td>54 – 60</td>
+                <td>54 – 59</td>
+                <td>54 – 59</td>
+              </tr>
+              <tr>
+                <td>Excellent</td>
+                <td>61 – 65</td>
+                <td>60 – 64</td>
+                <td>60 – 64</td>
+                <td>61 – 65</td>
+                <td>60 – 64</td>
+                <td>60 – 64</td>
+              </tr>
+              <tr>
+                <td>Good</td>
+                <td>66 – 69</td>
+                <td>65 – 68</td>
+                <td>65 – 69</td>
+                <td>66 – 69</td>
+                <td>65 – 68</td>
+                <td>65 – 68</td>
+              </tr>
+              <tr>
+                <td>Above Average</td>
+                <td>70 – 73</td>
+                <td>69 – 72</td>
+                <td>70 – 73</td>
+                <td>70 – 73</td>
+                <td>69 – 73</td>
+                <td>69 – 72</td>
+              </tr>
+              <tr>
+                <td>Average</td>
+                <td>74 – 78</td>
+                <td>73 – 76</td>
+                <td>74 – 78</td>
+                <td>74 – 77</td>
+                <td>74 – 77</td>
+                <td>73 – 76</td>
+              </tr>
+              <tr>
+                <td>Below Average</td>
+                <td>79 – 84</td>
+                <td>77 – 82</td>
+                <td>79 – 84</td>
+                <td>78 – 83</td>
+                <td>78 – 83</td>
+                <td>77 – 84</td>
+              </tr>
+              <tr>
+                <td>Poor</td>
+                <td>85+</td>
+                <td>83+</td>
+                <td>85+</td>
+                <td>84+</td>
+                <td>84+</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Recovery Heart Rate</h3>
+          <p>
+            To measure your recovery heart rate, do the step up exercise for 4
+            minutes, sit down for 1 minute and then take your pulse for 15
+            seconds. That’s heart rate 1. Rest for another 45 seconds, and take
+            your pulse again for 15 seconds. That’s heart rate 2. Repeat one
+            last time for heart rate 3, and calculate the recovery heart rate
+            using the calculator below. Start the timer and follow along.
+          </p>
+
+          <h4>Recovery Heart Rate Calculator</h4>
+          <p>
+            Measure your heart rate for 15 seconds, 1, 2, and 3 minutes
+            post-exercise.
+          </p>
+          <div class="calculator-inputs">
+            <label for="heartRate1">Heart Rate 1:</label>
+            <input
+              type="number"
+              id="heartRate1"
+              min="0"
+              placeholder="Beats in 15s"
+            />
+            <label for="heartRate2">Heart Rate 2:</label>
+            <input
+              type="number"
+              id="heartRate2"
+              min="0"
+              placeholder="Beats in 15s"
+            />
+            <label for="heartRate3">Heart Rate 3:</label>
+            <input
+              type="number"
+              id="heartRate3"
+              min="0"
+              placeholder="Beats in 15s"
+            />
+            <div class="calculator-result">
+              Your Recovery Heart Rate: <span id="recoveryResult">0</span> bpm
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Score</th>
+                <th>Excellent</th>
+                <th>Good</th>
+                <th>Fair</th>
+                <th>Poor</th>
+                <th>Very Poor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Recovery Rate</td>
+                <td>>89</td>
+                <td>80 – 89</td>
+                <td>65 – 79</td>
+                <td>55 – 64</td>
+                <td><54</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Popular Calculators</h3>
+          <a
+            href="#"
+            onclick="closeModal(); handleButtonClick('Calorie Intake and BMR Calculator')"
+            >Calorie Intake & BMR Calculator</a
+          >
+          <p>
+            The number of calories we burn per day is a combination of our basal
+            metabolic rate (BMR) and our activity level …
+          </p>
+          <a
+            href="#"
+            onclick="closeModal(); handleButtonClick('At Home Fitness Test')"
+            >At-Home Fitness Test</a
+          >
+          <p>
+            A fitness test is a measurement of strength, endurance, and
+            flexibility. Once you start exercising and eating …
+          </p>
+
+          <h3>Explore Exercises</h3>
+          <p>
+            Explore our range of exercises to boost your fitness journey.
+            <a href="Exercises.html">Visit Exercises</a>
+          </p>
+        </section>
+        <footer>© 2025 Fitmaxx. All rights reserved.</footer>
+      </div>
+    </div>
+
+    <div id="bmrModal" class="modal">
+      <div class="modal-content">
+        <button onclick="closeModal()" class="close">×</button>
+        <section>
+          <h2>Calorie Intake & BMR Calculator</h2>
+          <p>
+            Determine the number of daily calories your body needs to maintain,
+            lose, or gain weight with the help of our calorie intake & BMR
+            calculator!
+          </p>
+          <p>
+            The number of calories we burn per day is a combination of our basal
+            metabolic rate (BMR) and our activity level. The BMR is the number
+            of calories our body needs when at rest but awake for one day. And
+            our activity level expresses the number of calories we burn while
+            doing our daily physical activities.
+          </p>
+
+          <h3>Calorie Intake & BMR Calculator</h3>
+          <p>
+            This calorie intake and BMR calculator is aimed at healthy adult
+            women and is based on the Harris-Benedict equation with posterior
+            revision made by Roza and Shizgal. To accurately determine your BMR
+            and the number of calories you need per day, enter your height,
+            weight, age, and activity level.
+          </p>
+          <div class="calculator-inputs">
+            <label for="bmrUnit">Unit:</label>
+            <select id="bmrUnit">
+              <option value="metric">Metric (cm, kg)</option>
+              <option value="imperial">Imperial (in, lbs)</option>
+            </select>
+            <label for="bmrHeight">Height:</label>
+            <input
+              type="number"
+              id="bmrHeight"
+              min="0"
+              step="0.01"
+              placeholder="cm or in"
+            />
+            <label for="bmrWeight">Weight:</label>
+            <input
+              type="number"
+              id="bmrWeight"
+              min="0"
+              step="0.01"
+              placeholder="kg or lbs"
+            />
+            <label for="bmrAge">Age:</label>
+            <input type="number" id="bmrAge" min="0" placeholder="years" />
+            <label for="bmrActivity">Activity Level:</label>
+            <select id="bmrActivity">
+              <option value="sedentary">
+                Sedentary (little or no exercise)
+              </option>
+              <option value="lightly">
+                Lightly active (light exercise 1-3 days/week)
+              </option>
+              <option value="moderately">
+                Moderately active (moderate exercise 3-5 days/week)
+              </option>
+              <option value="very">
+                Very active (hard exercise 6-7 days/week)
+              </option>
+            </select>
+            <div class="calculator-result">
+              Your BMR: <span id="bmrResult">0</span> calories/day
+            </div>
+            <div class="calculator-result">
+              Calories you need per day:
+              <span id="calorieResult">0</span> calories
+            </div>
+          </div>
+
+          <h3>Body Mass Index (BMI) Calculator</h3>
+          <p>
+            The BMI is a measure of body fat used to determine whether someone
+            is underweight, normal, overweight, or obese. Enter your height and
+            weight below to calculate your BMI.
+          </p>
+          <div class="calculator-inputs">
+            <label for="bmiUnit">Unit:</label>
+            <select id="bmiUnit">
+              <option value="metric">Metric (cm, kg)</option>
+              <option value="imperial">Imperial (in, lbs)</option>
+            </select>
+            <label for="bmiHeight">Height:</label>
+            <input
+              type="number"
+              id="bmiHeight"
+              min="0"
+              step="0.01"
+              placeholder="cm or in"
+            />
+            <label for="bmiWeight">Weight:</label>
+            <input
+              type="number"
+              id="bmiWeight"
+              min="0"
+              step="0.01"
+              placeholder="kg or lbs"
+            />
+            <div class="calculator-result">
+              Your BMI: <span id="bmiResult">0</span>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>BMI Range</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Underweight</td>
+                <td>< 18</td>
+              </tr>
+              <tr>
+                <td>Thin</td>
+                <td>18 – 18.4</td>
+              </tr>
+              <tr>
+                <td>Normal</td>
+                <td>18.5 – 24.9</td>
+              </tr>
+              <tr>
+                <td>Overweight</td>
+                <td>25 – 29.9</td>
+              </tr>
+              <tr>
+                <td>Obese</td>
+                <td>> 30</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Waist to Hip Ratio (WHR) Calculator</h3>
+          <p>
+            The WHR measures the distribution of body fat, which is crucial for
+            assessing health risks. A WHR below 0.80 is recommended for women to
+            minimize health risks. Enter your waist and hip measurements below.
+          </p>
+          <div class="calculator-inputs">
+            <label for="whrUnit">Unit:</label>
+            <select id="whrUnit">
+              <option value="metric">Metric (cm)</option>
+              <option value="imperial">Imperial (in)</option>
+            </select>
+            <label for="waist">Waist Measurement:</label>
+            <input
+              type="number"
+              id="waist"
+              min="0"
+              step="0.01"
+              placeholder="cm or in"
+            />
+            <label for="hip">Hip Measurement:</label>
+            <input
+              type="number"
+              id="hip"
+              min="0"
+              step="0.01"
+              placeholder="cm or in"
+            />
+            <div class="calculator-result">
+              Your WHR: <span id="whrResult">0</span>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>WHR Range</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Low Health Risk</td>
+                <td>< 0.80</td>
+              </tr>
+              <tr>
+                <td>Moderate Health Risk</td>
+                <td>0.81 – 0.85</td>
+              </tr>
+              <tr>
+                <td>High Health Risk</td>
+                <td>> 0.85</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Meal Calorie Tracker</h3>
+          <p>
+            Enter the food items you've consumed and their quantities to
+            calculate your total calorie intake.
+          </p>
+          <div class="calculator-inputs">
+            <label for="foodItem">Food Item:</label>
+            <select id="foodItem">
+              <option value="">--Select Food--</option>
+              <option value="chapati">Chapati</option>
+              <option value="salad">Salad</option>
+              <option value="vegetableCurry">Vegetable Curry</option>
+              <option value="buttermilk">Buttermilk</option>
+              <option value="Poha">Poha</option>
+              <option value="Upma">Upma</option>
+              <option value="Idli">Idli</option>
+              <option value="Dosa">Dosa</option>
+              <option value="Paratha">Paratha</option>
+              <option value="MisalPav">Misal Pav</option>
+              <option value="Roti">Roti</option>
+              <option value="Rice">Rice</option>
+              <option value="Dal">Dal</option>
+              <option value="Sabzi">Sabzi</option>
+              <option value="Sambar">Sambar</option>
+              <option value="Rajma">Rajma</option>
+              <option value="Biryani">Biryani</option>
+              <option value="Samosa">Samosa</option>
+              <option value="Pakoras">Pakoras</option>
+              <option value="VadaPav">Vada Pav</option>
+              <option value="PavBhaji">Pav Bhaji</option>
+              <option value="BhelPuri">Bhel Puri</option>
+              <option value="PaniPuri">Pani Puri</option>
+              <option value="GulabJamun">Gulab Jamun</option>
+              <option value="Jalebi">Jalebi</option>
+              <option value="Rasgulla">Rasgulla</option>
+              <option value="Kheer">Kheer</option>
+              <option value="Laddu">Laddu</option>
+              <option value="Halwa">Halwa</option>
+              <option value="Chai">Chai</option>
+              <option value="Lassi">Lassi</option>
+              <option value="CoconutWater">Coconut Water</option>
+              <option value="SugarcaneJuice">Sugarcane Juice</option>
+            </select>
+            <label for="quantity">Quantity:</label>
+            <input
+              type="number"
+              id="quantity"
+              min="1"
+              placeholder="Enter quantity"
+            />
+            <button onclick="addFoodItem()">Add Item</button>
+            <ul id="mealList" class="mt-4 list-disc list-inside"></ul>
+            <div class="calculator-result">
+              Total Calories Consumed: <span id="totalCalories">0</span> kcal
+            </div>
+          </div>
+
+          <h3>Popular Calculators</h3>
+          <a
+            href="#"
+            onclick="closeModal(); handleButtonClick('At Home Fitness Test')"
+            >At-Home Fitness Test</a
+          >
+          <p>
+            A fitness test is a measurement of strength, endurance, and
+            flexibility. Once you start exercising and eating …
+          </p>
+          <a
+            href="#"
+            onclick="closeModal(); handleButtonClick('Resting and Recovery Heart Calculator')"
+            >Resting & Recovery Heart Rate Calculator</a
+          >
+          <p>
+            Measure your resting and recovery heart rates to assess your
+            cardiovascular fitness …
+          </p>
+
+          <h3>Explore Exercises</h3>
+          <p>
+            Explore our range of exercises to boost your fitness journey.
+            <a href="Exercises.html">Visit Exercises</a>
+          </p>
+        </section>
+        <footer>© 2025 Fitmaxx. All rights reserved.</footer>
+      </div>
+    </div>
+
+    <script>
+      function handleButtonClick(calculatorName) {
+        console.log(`Clicked: ${calculatorName}`);
+        if (calculatorName === "At Home Fitness Test") {
+          document.getElementById("fitnessTestModal").classList.add("show");
+        } else if (calculatorName === "Resting and Recovery Heart Calculator") {
+          document.getElementById("heartRateModal").classList.add("show");
+        } else if (calculatorName === "Calorie Intake and BMR Calculator") {
+          document.getElementById("bmrModal").classList.add("show");
+        }
+      }
+
+      function closeModal() {
+        document
+          .querySelectorAll(".modal")
+          .forEach((modal) => modal.classList.remove("show"));
+      }
+
+      function calculateRecoveryHeartRate() {
+        const hr1 = parseFloat(document.getElementById("heartRate1").value);
+        const hr3 = parseFloat(document.getElementById("heartRate3").value);
+        const resultSpan = document.getElementById("recoveryResult");
+
+        if (!isNaN(hr1) && !isNaN(hr3) && hr1 >= 0 && hr3 >= 0 && hr1 >= hr3) {
+          const recoveryRate = (hr1 - hr3) * 4;
+          resultSpan.textContent = Math.round(recoveryRate);
+        } else {
+          resultSpan.textContent = "0";
+        }
+      }
+
+      function calculateBMR() {
+        const unit = document.getElementById("bmrUnit").value;
+        let height = parseFloat(document.getElementById("bmrHeight").value);
+        let weight = parseFloat(document.getElementById("bmrWeight").value);
+        const age = parseFloat(document.getElementById("bmrAge").value);
+        const activity = document.getElementById("bmrActivity").value;
+        const bmrResultSpan = document.getElementById("bmrResult");
+        const calorieResultSpan = document.getElementById("calorieResult");
+
+        if (
+          !isNaN(height) &&
+          !isNaN(weight) &&
+          !isNaN(age) &&
+          height > 0 &&
+          weight > 0 &&
+          age > 0
+        ) {
+          if (unit === "imperial") {
+            weight = weight / 2.20462;
+            height = height * 2.54;
+          }
+          const bmr = 447.593 + 9.247 * weight + 3.098 * height - 4.33 * age;
+          let activityMultiplier;
+          switch (activity) {
+            case "sedentary":
+              activityMultiplier = 1.2;
+              break;
+            case "lightly":
+              activityMultiplier = 1.375;
+              break;
+            case "moderately":
+              activityMultiplier = 1.55;
+              break;
+            case "very":
+              activityMultiplier = 1.725;
+              break;
+            default:
+              activityMultiplier = 1.2;
+          }
+          const dailyCalories = bmr * activityMultiplier;
+          bmrResultSpan.textContent = Math.round(bmr);
+          calorieResultSpan.textContent = Math.round(dailyCalories);
+        } else {
+          bmrResultSpan.textContent = "0";
+          calorieResultSpan.textContent = "0";
+        }
+      }
+
+      function calculateBMI() {
+        const unit = document.getElementById("bmiUnit").value;
+        const height = parseFloat(document.getElementById("bmiHeight").value);
+        const weight = parseFloat(document.getElementById("bmiWeight").value);
+        const resultSpan = document.getElementById("bmiResult");
+
+        if (!isNaN(height) && !isNaN(weight) && height > 0 && weight > 0) {
+          let bmi;
+          if (unit === "metric") {
+            const heightInMeters = height / 100;
+            bmi = weight / (heightInMeters * heightInMeters);
+          } else {
+            bmi = (703 * weight) / (height * height);
+          }
+          resultSpan.textContent = bmi.toFixed(1);
+        } else {
+          resultSpan.textContent = "0";
+        }
+      }
+
+      function calculateWHR() {
+        const waist = parseFloat(document.getElementById("waist").value);
+        const hip = parseFloat(document.getElementById("hip").value);
+        const resultSpan = document.getElementById("whrResult");
+
+        if (!isNaN(waist) && !isNaN(hip) && waist > 0 && hip > 0) {
+          const whr = waist / hip;
+          resultSpan.textContent = whr.toFixed(2);
+        } else {
+          resultSpan.textContent = "0";
+        }
+      }
+
+      document
+        .getElementById("heartRate1")
+        .addEventListener("input", calculateRecoveryHeartRate);
+      document
+        .getElementById("heartRate3")
+        .addEventListener("input", calculateRecoveryHeartRate);
+      document
+        .getElementById("bmrUnit")
+        .addEventListener("change", calculateBMR);
+      document
+        .getElementById("bmrHeight")
+        .addEventListener("input", calculateBMR);
+      document
+        .getElementById("bmrWeight")
+        .addEventListener("input", calculateBMR);
+      document.getElementById("bmrAge").addEventListener("input", calculateBMR);
+      document
+        .getElementById("bmrActivity")
+        .addEventListener("change", calculateBMR);
+      document
+        .getElementById("bmiUnit")
+        .addEventListener("change", calculateBMI);
+      document
+        .getElementById("bmiHeight")
+        .addEventListener("input", calculateBMI);
+      document
+        .getElementById("bmiWeight")
+        .addEventListener("input", calculateBMI);
+      document
+        .getElementById("whrUnit")
+        .addEventListener("change", calculateWHR);
+      document.getElementById("waist").addEventListener("input", calculateWHR);
+      document.getElementById("hip").addEventListener("input", calculateWHR);
+
+      const calorieData = {
+        chapati: 119,
+        salad: 100,
+        vegetableCurry: 130,
+        buttermilk: 50,
+        Poha: 250,
+        Upma: 220,
+        Idli: 40,
+        Dosa: 168,
+        Paratha: 260,
+        MisalPav: 400,
+        Roti: 120,
+        Rice: 200,
+        Dal: 150,
+        Sabzi: 180,
+        Sambar: 150,
+        Rajma: 250,
+        Biryani: 700,
+        Samosa: 200,
+        Pakoras: 300,
+        VadaPav: 280,
+        PavBhaji: 450,
+        BhelPuri: 250,
+        PaniPuri: 220,
+        GulabJamun: 150,
+        Jalebi: 200,
+        Rasgulla: 120,
+        Kheer: 300,
+        Laddu: 250,
+        Halwa: 400,
+        Chai: 100,
+        Lassi: 220,
+        CoconutWater: 45,
+        SugarcaneJuice: 180,
+      };
+
+      let totalCalories = 0;
+
+      function addFoodItem() {
+        const foodSelect = document.getElementById("foodItem");
+        const quantityInput = document.getElementById("quantity");
+        const mealList = document.getElementById("mealList");
+        const totalCaloriesSpan = document.getElementById("totalCalories");
+
+        const selectedFood = foodSelect.value;
+        const quantity = parseInt(quantityInput.value);
+
+        if (selectedFood && quantity > 0) {
+          const caloriesPerUnit = calorieData[selectedFood];
+          const itemCalories = caloriesPerUnit * quantity;
+          totalCalories += itemCalories;
+          // ⭐ Save calories consumed to localStorage with today's date
+          const consumedLog =
+            JSON.parse(localStorage.getItem("calorieConsumedLog")) || [];
+          const today = new Date().toISOString().split("T")[0];
+
+          const todayIndex = consumedLog.findIndex((log) => log.date === today);
+          if (todayIndex > -1) {
+            consumedLog[todayIndex].calories += itemCalories;
+          } else {
+            consumedLog.push({ date: today, calories: itemCalories });
+          }
+
+          localStorage.setItem(
+            "calorieConsumedLog",
+            JSON.stringify(consumedLog)
+          );
+
+          const listItem = document.createElement("li");
+          listItem.textContent = `${quantity} x ${
+            foodSelect.options[foodSelect.selectedIndex].text
+          } = ${itemCalories} kcal`;
+          mealList.appendChild(listItem);
+
+          totalCaloriesSpan.textContent = totalCalories;
+
+          foodSelect.value = "";
+          quantityInput.value = "";
+        } else {
+          alert("Please select a food item and enter a valid quantity.");
+        }
+      }
+    </script>
+  </body>
+</html>

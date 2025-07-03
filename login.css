@@ -1,0 +1,195 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  background: #f7dbd9;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+#header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background:#f7dbd9; /* Ensure header is visible over sliding content */
+} 
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 10px 7%;
+}
+
+.logo {
+  width: 140px;
+}
+
+nav ul li {
+  display: inline-block;
+  list-style: none;
+  margin: 10px 20px;
+}
+
+nav ul li a {
+  color: #b40b0b;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 15px;
+  position: relative;
+}
+
+nav ul li a::after {
+  content: '';
+  width: 0;
+  height: 3px;
+  background: #444;
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  transition: 0.5s;
+}
+
+nav ul li a:hover::after {
+  width: 100%;
+}
+
+.container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Contain sliding content */
+}
+
+.slide-wrapper {
+  display: flex;
+  width: 200%; /* Two full-width sections */
+  height: 100%;
+  transition: transform 0.8s ease;
+}
+
+.section {
+  width: 50%; /* Each section takes half the wrapper (full viewport when visible) */
+  display: flex;
+  height: 100%;
+  background: #f7dbd9;
+}
+
+.image-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.image-section img {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.form-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-box {
+  width: 280px;
+  text-align: center;
+}
+
+.form-box h2 {
+  margin-bottom: 20px;
+}
+
+.form-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-box select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #fff;
+  font-size: 14px;
+  color: #333;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  cursor: pointer;
+}
+
+.form-box select:focus {
+  outline: none;
+  border-color: #b40b0b;
+  box-shadow: 0 0 5px rgba(180, 11, 11, 0.3);
+}
+
+.form-box select option {
+  padding: 10px;
+}
+
+.form-box button {
+  width: 100%;
+  padding: 10px;
+  background: #b40b0b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.form-box button:hover {
+  background: #b40b0b;
+}
+
+.form-box .option {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.form-box .option a {
+  color: #b40b0b;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Sliding animation */
+.slide-signup .slide-wrapper {
+  transform: translateX(-50%); /* Slide to show signup section */
+}
+
+/* Footer */
+footer {
+  background-color: #b40b0b;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}

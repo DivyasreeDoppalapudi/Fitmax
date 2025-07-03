@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Workout Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background:rgb(236, 222, 215);
+      color: #333;
+    }
+    #header {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  } 
+  
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    position: fixed;       /* 👈 Fixed at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 7%;
+    z-index: 1000;        
+  }
+  
+  .logo {
+    width: 140px;
+  }
+  
+  nav ul li{
+    display:inline-block;
+    list-style: none;
+    margin: 10px 20px;
+  }
+  nav ul li a{
+    color: #b40b0b;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 15px;
+    position: relative;
+  }
+  nav ul li a::after{
+    content: '';
+    width: 0;
+    height:3px;
+    background: #444;
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    transition: 0.5s;
+  }
+  nav ul li a:hover::after{
+    width:100%;
+  }
+  
+    /* ========== TOP SECTION ========== */
+    .hero-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+      background: linear-gradient(to right,#c06d6d);
+      clip-path: polygon(0 0, 90% 0, 100% 100%, 0% 100%);
+      position: relative;
+    }
+
+    .hero-image {
+      flex: 1;
+      overflow: hidden;
+      border-radius: 30px;
+      transform: scale(1);
+      transition: transform 0.5s ease;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      transition: transform 0.6s ease;
+    }
+
+    .hero-image:hover img {
+      transform: scale(1.05);
+    }
+
+    .hero-text {
+      flex: 1;
+      padding: 40px;
+      color: #fff;
+      text-align: center;
+    }
+
+    .hero-text h1 {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+
+    /* ========== VIDEO SECTION ========== */
+    .video-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 60px 40px;
+      flex-wrap: wrap;
+    }
+
+    .video-box {
+      width: 360px;
+      background: #fff;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .video-preview {
+      display: flex;
+      height: 200px;
+    }
+
+    .left-part {
+      background:#c06d6d;;
+      width: 60%;
+      padding: 20px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .left-part h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .left-part h3 {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .left-part p {
+      font-size: 0.7rem;
+      margin-top: 10px;
+      color: #636262;
+    }
+
+    .play-btn {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      width: 40px;
+      height: 40px;
+      background: #000;
+      color: #fff;
+      font-size: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .right-part {
+      background: #f1f1f1;
+      width: 40%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    .right-part h4 {
+      font-size: 2rem;
+    }
+
+    .right-part small {
+      font-size: 0.7rem;
+      margin: 4px 0;
+    }
+
+    .video-caption {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .video-caption small {
+      font-weight: bold;
+      font-size: 0.75rem;
+      color: #555;
+    }
+
+    .video-caption h4 {
+      margin-top: 5px;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero-section {
+        flex-direction: column;
+        clip-path: none;
+        border-radius: 0 0 60px 60px;
+      }
+
+      .hero-text {
+        padding: 20px;
+      }
+
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+
+      .video-box {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="header">   
+    <div class="container">
+      <nav>
+        <img src="images/mainlogo.png" alt="Fitmax" class="logo">
+        <ul>
+          <li><a href="Home.html"> Home </a></li>
+          <li><a href="Exercises.html"> Exercises </a></li>
+          <li><a href="Diet.html"> Diet tracker </a></li>
+          <li><a href="Aboutus.html"> About us </a></li>
+          <li><a href="Profile.html"> Profile </a></li>
+          <li><a href="Login.html"> Login </a></li>
+        </ul>
+      </nav>  
+    </div>
+</div>
+  <!-- Top Hero Section -->
+  <section class="hero-section">
+    <div class="hero-image">
+      <img src="images/UPPER MID IMAGE2.PNG.jpg" alt="Smoothie Bowl Image" />
+    </div>
+    <div class="hero-text">
+      <h1>"Fitness is not about being better than someone else. It's about being better than you used to be."</h1>
+    </div>
+  </section>
+
+  <!-- Workout Video Cards -->
+  <!-- Workout Video Cards -->
+  <section class="video-wrapper">
+
+    <!-- Original 3 cards -->
+    <div class="video-box">
+      <div class="video-preview">
+        <div class="left-part">
+          <h2>UPPER BODY WORKOUTS</h2>
+          <h3>1-MINUTE CHEST ROUTINE FOR WOMEN</h3>
+          <p>Short chest routine with a stopwatch-style format.</p>
+          <div class="play-btn" onclick="window.open('images/UpperVid1 - Trim.mp4')">&#9658;</div>
+        </div>
+        <div class="right-part">
+          <h4>1:00</h4>
+          <small>ELAPSED<br>00:00</small>
+          <small>INTERVALS<br>1 / 2</small>
+          <small>REMAINING<br>1:00</small>
+        </div>
+      </div>
+      <div class="video-caption">
+        <small>UPPER BODY WORKOUTS</small>
+        <h4>1-Minute Chest Routine For Women</h4>
+      </div>
+    </div>
+
+    <div class="video-box">
+      <div class="video-preview">
+        <div class="left-part">
+          <h2>FULL BODY WORKOUTS</h2>
+          <h3>7-MINUTE ARMS & THIGHS WORKOUT</h3>
+          <p>Combo routine targeting arms and thighs for strength.</p>
+          <div class="play-btn" onclick="window.open('images/Upper arms & thighs.mp4')">&#9658;</div>
+        </div>
+        <div class="right-part">
+          <h4>6.47</h4>
+          <small>ELAPSED<br>00:00</small>
+          <small>INTERVALS<br>1 / 23</small>
+          <small>REMAINING<br>6.47</small>
+        </div>
+      </div>
+      <div class="video-caption">
+        <small>FULL BODY WORKOUTS</small>
+        <h4>4-MINUTE UPPER BODY SPLIT WORKOUT</h4>
+      </div>
+    </div>
+
+    <div class="video-box">
+      <div class="video-preview">
+        <div class="left-part">
+          <h2>UPPER BODY WORKOUTS</h2>
+          <h3>4-MINUTE UPPER BODY SPLIT WORKOUT</h3>
+          <p>4-minute arms routine with dumbbells and variations.</p>
+          <div class="play-btn" onclick="window.open('images/Upper body split.mp4')">&#9658;</div>
+        </div>
+        <div class="right-part">
+          <h4>4:15</h4>
+          <small>ELAPSED<br>00:00</small>
+          <small>INTERVALS<br>1 / 27</small>
+          <small>REMAINING<br>4:15</small>
+        </div>
+      </div>
+      <div class="video-caption">
+        <small>UPPER BODY WORKOUTS</small>
+        <h4>4 MINUTE ARM CIRCUIT</h4>
+      </div>
+    </div>
+
+    <!-- New workout 1 -->
+    <div class="video-box">
+      <div class="video-preview">
+        <div class="left-part">
+          <h2>CORE WORKOUTS</h2>
+          <h3>4 MINUTE ARM CIRCUIT</h3>
+          <p>Intense core routine designed to strengthen and tone abs.</p>
+          <div class="play-btn" onclick="window.open('images/Upper arm circuit.mp4')">&#9658;</div>
+        </div>
+        <div class="right-part">
+          <h4>3.56</h4>
+          <small>ELAPSED<br>00:00</small>
+          <small>INTERVALS<br>1 / 20</small>
+          <small>REMAINING<br>3.56</small>
+        </div>
+      </div>
+      <div class="video-caption">
+        <small>CORE WORKOUTS</small>
+        <h4>12-Minute Core & Abs Blaster</h4>
+      </div>
+    </div>
+
+    <!-- New workout 2 -->
+    <div class="video-box">
+      <div class="video-preview">
+        <div class="left-part">
+          <h2>FULL BODY WORKOUTS</h2>
+          <h3>3.43-MINUTE FULL BODY HIIT</h3>
+          <p>Burn fat fast with this full-body high intensity interval training.</p>
+          <div class="play-btn" onclick="window.open('images/Upper full body hit.mp4')">&#9658;</div>
+        </div>
+        <div class="right-part">
+          <h4>3.43</h4>
+          <small>ELAPSED<br>00:00</small>
+          <small>INTERVALS<br>1 / 24</small>
+          <small>REMAINING<br>3.43</small>
+        </div>
+      </div>
+      <div class="video-caption">
+        <small>FULL BODY WORKOUTS</small>
+        <h4>18-Minute Full Body HIIT</h4>
+      </div>
+    </div>
+
+    <!-- New workout 3 -->
+    <div class="video-box">
+      <div class="video-preview">
+        <div class="left-part">
+          <h2>STRETCH & RECOVERY</h2>
+          <h3>4-MINUTE MORNING STRETCH</h3>
+          <p>Gentle stretch routine to energize your morning.</p>
+          <div class="play-btn" onclick="window.open('images/Upper morning stretch.mp4')">&#9658;</div>
+        </div>
+        <div class="right-part">
+          <h4>04:00</h4>
+          <small>ELAPSED<br>00:00</small>
+          <small>INTERVALS<br>1 / 12</small>
+          <small>REMAINING<br>04:00</small>
+        </div>
+      </div>
+      <div class="video-caption">
+        <small>STRETCH & RECOVERY</small>
+        <h4>8-Minute Morning Stretch</h4>
+      </div>
+    </div>
+
+  </section>
+  <!-- Fullscreen Hero Image Section -->
+<!-- UPPER3 Section -->
+<section class="hero-section">
+ <style>
+ .hero-section img {
+    transition: transform 0.5s ease;
+  }
+  
+  .hero-section img:nth-child(1),
+  .hero-section img:nth-child(2) {
+    transform: translateX(-80px);
+  }
+  
+  .hero-section img:nth-child(1):hover,
+  .hero-section img:nth-child(2):hover {
+    transform: translateX(-80px) scale(1.05);
+  }
+  footer {
+      background-color: #b40b0b;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top:40px;
+    }
+   
+ </style> 
+
+  <div class="hero-text">
+    <h1>"Strength doesn’t come from what you can do. It comes from overcoming the things you once thought you couldn’t."</h1>
+  </div>
+  <div class="hero-image">
+    <img src="images/UPPER3.jpg" alt="UPPER3 Image" />
+  </div>
+</section>
+
+
+<!-- Additional Workout Cards -->
+<section class="video-wrapper">
+
+  <!-- New workout 4 -->
+  <div class="video-box">
+    <div class="video-preview">
+      <div class="left-part">
+        <h2>LEG WORKOUTS</h2>
+        <h3>5-MINUTE TONED LEG CIRCUIT</h3>
+        <p>Perfect for building strong and toned legs at home.</p>
+        <div class="play-btn" onclick="window.open('images/Upper tone leg circuit.mp4')">&#9658;</div>
+      </div>
+      <div class="right-part">
+        <h4>5:31</h4>
+        <small>ELAPSED<br>00:00</small>
+        <small>INTERVALS<br>1 / 22</small>
+        <small>REMAINING<br>5:31</small>
+      </div>
+    </div>
+    <div class="video-caption">
+      <small>LEG WORKOUTS</small>
+      <h4>15-Minute Toned Leg Circuit</h4>
+    </div>
+  </div>
+
+  <!-- New workout 5 -->
+  <div class="video-box">
+    <div class="video-preview">
+      <div class="left-part">
+        <h2>STRETCH & RECOVERY</h2>
+        <h3>3-MINUTE UPPER BODY & CARDIO BEGINNERS WORKOUT</h3>
+        <p>Calm your body and enhance flexibility post-workout.</p>
+        <div class="play-btn" onclick="window.open('images/UPPER BODY & CARDIO BEGINNERS .mp4')">&#9658;</div>
+      </div>
+      <div class="right-part">
+        <h4>3:00</h4>
+        <small>ELAPSED<br>00:00</small>
+        <small>INTERVALS<br>1 / 14</small>
+        <small>REMAINING<br>3:00</small>
+      </div>
+    </div>
+    <div class="video-caption">
+      <small>STRETCH & RECOVERY</small>
+      <h4>3 MINUTE UPPER BODY & CARDIO BEGINNERS WORKOUT</h4>
+    </div>
+  </div>
+
+  <!-- New workout 6 -->
+  <div class="video-box">
+    <div class="video-preview">
+      <div class="left-part">
+        <h2>LOW IMPACT</h2>
+        <h3>3.57-MINUTE UPPER BODY CARDIO SPLIT WORKOUT</h3>
+        <p>Beginner-friendly cardio with no jumping or equipment.</p>
+        <div class="play-btn" onclick="window.open('iamges/UPPER BODY CARDIO SPLIT WORKOUT.mp4')">&#9658;</div>
+      </div>
+      <div class="right-part">
+        <h4>3.57</h4>
+        <small>ELAPSED<br>00:00</small>
+        <small>INTERVALS<br>1 / 28</small>
+        <small>REMAINING<br>3.57</small>
+      </div>
+    </div>
+    <div class="video-caption">
+      <small>LOW IMPACT</small>
+      <h4>UPPER BODY CARDIO SPLIT WORKOUT</h4>
+    </div>
+  </div>
+
+</section>
+
+
+<footer>
+  &copy; 2025 Fitmaxx. All rights reserved.
+</footer>
+</body>
+</html>

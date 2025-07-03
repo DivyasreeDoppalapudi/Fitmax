@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login/Signup Animation</title>
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+    <div id="header">
+      <div class="hcontainer">
+        <nav>
+          <img src="images/mainlogo.png" alt="Fitmax" class="logo" />
+          <ul>
+            <li><a href="Home.html"> Home </a></li>
+            <li><a href="Exercises.html"> Exercises </a></li>
+            <li><a href="Diet.html"> Diet tracker </a></li>
+            <li><a href="Aboutus.html"> About us </a></li>
+            <li><a href="Profile.html"> Profile </a></li>
+            <li><a href="Login.html"> Login </a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="container" id="mainContainer">
+      <div class="slide-wrapper">
+        <!-- Login Section (Image Left, Form Right) -->
+        <div class="section" id="loginSection">
+          <div class="image-section">
+            <img src="images/img19-pro.png" alt="Fitmax Image" />
+          </div>
+          <div class="form-section">
+            <div class="form-box" id="loginBox">
+              <h2>Login</h2>
+              <input
+                type="email"
+                placeholder="Email"
+                id="loginEmail"
+                required
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                id="loginPassword"
+                required
+              />
+              <button onclick="login()">Login</button>
+              <div class="option">
+                Don't have an account?
+                <a onclick="showSignup()">Signup</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Signup Section (Form Left, Image Right) -->
+        <div class="section" id="signupSection">
+          <div class="form-section">
+            <div class="form-box" id="signupBox">
+              <h2>Signup</h2>
+              <input
+                type="text"
+                placeholder="Full Name"
+                id="signupName"
+                required
+              />
+              <select id="signupGender" required>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+              <input
+                type="date"
+                placeholder="Date of Birth"
+                id="signupDOB"
+                required
+              />
+              <input
+                type="tel"
+                placeholder="Phone Number"
+                id="signupPhone"
+                required
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                id="signupEmail"
+                required
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                id="signupPassword"
+                required
+              />
+              <input
+                type="password"
+                placeholder="Re-enter Password"
+                id="reenterPassword"
+                required
+              />
+              <button onclick="signup()">Signup</button>
+              <div class="option">
+                Already have an account?
+                <a onclick="showLogin()">Login</a>
+              </div>
+            </div>
+          </div>
+          <div class="image-section">
+            <img src="images/img1-pro.png" alt="Signup Illustration" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>© 2025 Diet Tracker. All rights reserved.</footer>
+  </body>
+  <script>
+    function showSignup() {
+      document.getElementById("mainContainer").classList.add("slide-signup");
+    }
+
+    function showLogin() {
+      document.getElementById("mainContainer").classList.remove("slide-signup");
+    }
+
+    async function login() {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      if (email && password) {
+        try {
+          const res = await fetch("http://localhost:5000/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+
+          const data = await res.json();
+
+          if (res.ok) {
+            localStorage.setItem("user", JSON.stringify(data.user));
+            alert("Login successful!");
+            window.location.href = "Profile.html";
+          } else {
+            alert(data.message || "Login failed");
+          }
+        } catch (err) {
+          alert("Error logging in: " + err.message);
+        }
+      } else {
+        alert("Please fill in all fields!");
+      }
+    }
+
+    async function signup() {
+      const name = document.getElementById("signupName").value;
+      const gender = document.getElementById("signupGender").value;
+      const dob = document.getElementById("signupDOB").value;
+      const phone = document.getElementById("signupPhone").value;
+      const email = document.getElementById("signupEmail").value;
+      const password = document.getElementById("signupPassword").value;
+      const reenterPassword = document.getElementById("reenterPassword").value;
+
+      if (
+        name &&
+        gender &&
+        dob &&
+        phone &&
+        email &&
+        password &&
+        reenterPassword
+      ) {
+        if (password === reenterPassword) {
+          try {
+            const res = await fetch("http://localhost:5000/api/auth/signup", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                username: name,
+                gender,
+                dob,
+                phone,
+                email,
+                password,
+              }),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+              alert("Signup successful! Please login.");
+              showLogin();
+            } else {
+              alert(data.message || "Signup failed");
+            }
+          } catch (err) {
+            alert("Error signing up: " + err.message);
+          }
+        } else {
+          alert("Passwords do not match!");
+        }
+      } else {
+        alert("Please fill in all fields!");
+      }
+    }
+  </script>
+</html>

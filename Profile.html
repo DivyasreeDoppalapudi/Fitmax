@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile - FitMax</title>
+    <link rel="stylesheet" href="profilestyles.css" />
+  </head>
+  <body>
+    <!------------Nav bar----------->
+    <div id="header">
+      <div class="navigation">
+        <nav role="navigation" aria-label="Main navigation">
+          <img
+            src="images/mainlogo.png"
+            alt="FitMax Logo"
+            class="logo"
+            onerror="this.src='https://via.placeholder.com/140x40'"
+          />
+          <ul>
+            <li><a href="Home.html"> Home </a></li>
+            <li><a href="Exercises.html"> Exercises </a></li>
+            <li><a href="Diet.html"> Diet tracker </a></li>
+            <li><a href="Aboutus.html"> About us </a></li>
+            <li><a href="Profile.html"> Profile </a></li>
+            <li><a href="Login.html"> Login </a></li>
+            <li><a href="#" onclick="logout()">Logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <!------user details------->
+    <div class="container">
+      <div class="profile-section">
+        <div class="profile-details">
+          <h2>PROFILE</h2>
+          <div id="display-mode">
+            <div class="field-container">
+              <strong>Name:</strong>
+              <span data-field="name" id="username">John Doe</span>
+            </div>
+            <div class="field-container">
+              <strong>Date of Birth:</strong>
+              <span data-field="dob" id="dob">January 15, 1995</span>
+            </div>
+            <div class="field-container">
+              <strong>Gender:</strong>
+              <span data-field="gender" id="gender">Male</span>
+            </div>
+            <div class="field-container">
+              <strong>Email:</strong>
+              <span data-field="email" id="email">john.doe@example.com</span>
+            </div>
+            <div class="field-container">
+              <strong>Phone Number:</strong>
+              <span data-field="phone" id="phone">+1 (555) 123-4567</span>
+            </div>
+            <div class="field-container">
+              <strong>Joined:</strong>
+              <span data-field="joined" id="joined">January 15, 2025</span>
+            </div>
+            <button class="edit-btn" aria-label="Edit profile details">
+              Edit
+            </button>
+          </div>
+          <div id="edit-mode" style="display: none">
+            <div class="field-container">
+              <strong>Name:</strong>
+              <input
+                type="text"
+                data-field="name"
+                value="John Doe"
+                aria-required="true"
+                aria-label="Name"
+              />
+              <div class="error" data-error="name">Name is required</div>
+            </div>
+            <div class="field-container">
+              <strong>Date of Birth:</strong>
+              <input
+                type="date"
+                data-field="dob"
+                value="1995-01-15"
+                aria-required="true"
+                aria-label="Date of Birth"
+              />
+              <div class="error" data-error="dob">
+                Valid date of birth is required (age 13+)
+              </div>
+            </div>
+            <div class="field-container">
+              <strong>Gender:</strong>
+              <select
+                data-field="gender"
+                aria-required="true"
+                aria-label="Gender"
+              >
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+              </select>
+              <div class="error" data-error="gender">Gender is required</div>
+            </div>
+            <div class="field-container">
+              <strong>Email:</strong>
+              <input
+                type="email"
+                data-field="email"
+                value="john.doe@example.com"
+                aria-required="true"
+                aria-label="Email"
+              />
+              <div class="error" data-error="email">
+                Valid email is required
+              </div>
+            </div>
+            <div class="field-container">
+              <strong>Phone Number:</strong>
+              <input
+                type="tel"
+                data-field="phone"
+                value="+1 (555) 123-4567"
+                aria-label="Phone Number"
+              />
+              <div class="error" data-error="phone">
+                Valid phone number is required if provided
+              </div>
+            </div>
+            <div class="field-container">
+              <strong>Joined:</strong>
+              <input
+                type="date"
+                data-field="joined"
+                value="2025-01-15"
+                readonly
+                aria-readonly="true"
+                aria-label="Joined Date"
+              />
+            </div>
+            <div class="button-container">
+              <button class="save-btn" aria-label="Save profile changes">
+                Save
+              </button>
+              <button class="cancel-btn" aria-label="Cancel profile changes">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <h2>PROGRESS</h2>
+        <canvas
+          id="progressChart"
+          aria-label="Bar chart showing calories burned and consumed over the last 30 days"
+        ></canvas>
+      </div>
+    </div>
+
+    <footer>© 2025 Fitmaxx. All rights reserved.</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script>
+      // User details editing functionality
+      (function () {
+        const displayMode = document.getElementById("display-mode");
+        const editMode = document.getElementById("edit-mode");
+        const editBtn = displayMode.querySelector(".edit-btn");
+        const saveBtn = editMode.querySelector(".save-btn");
+        const cancelBtn = editMode.querySelector(".cancel-btn");
+        let originalData = {};
+
+        // Format date for display (e.g., "1995-01-15" to "January 15, 1995")
+        function formatDate(dateStr) {
+          if (!dateStr) return "";
+          const date = new Date(dateStr);
+          return date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        }
+
+        // Validate input
+        function validateInput(field, value) {
+          if (field === "name") {
+            return value.trim() !== "";
+          }
+          if (field === "dob") {
+            const date = new Date(value);
+            const today = new Date();
+            const minAgeDate = new Date(
+              today.getFullYear() - 13,
+              today.getMonth(),
+              today.getDate()
+            );
+            return (
+              !isNaN(date) &&
+              date <= minAgeDate &&
+              date >= new Date("1900-01-01")
+            );
+          }
+          if (field === "gender") {
+            return ["Male", "Female", "Other", "Prefer not to say"].includes(
+              value
+            );
+          }
+          if (field === "email") {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+          }
+          if (field === "phone") {
+            if (value.trim() === "") return true; // Phone is optional
+            return /^\+?[\d\s()-]{10,}$/.test(value);
+          }
+          return true;
+        }
+
+        // Show/hide error messages
+        function toggleError(field, show) {
+          const errorDiv = editMode.querySelector(`[data-error="${field}"]`);
+          if (errorDiv) {
+            errorDiv.style.display = show ? "block" : "none";
+          }
+        }
+
+        // Switch to edit mode
+        editBtn.addEventListener("click", () => {
+          // Store original data
+          displayMode.querySelectorAll("[data-field]").forEach((span) => {
+            originalData[span.dataset.field] = span.textContent;
+          });
+          // Copy to inputs
+          editMode.querySelectorAll("[data-field]").forEach((input) => {
+            if (input.dataset.field === "dob") {
+              // Convert display date to YYYY-MM-DD for input
+              const displayDate = originalData.dob || "January 15, 1995";
+              const date = new Date(displayDate);
+              input.value = date.toISOString().split("T")[0];
+            } else if (input.dataset.field === "gender") {
+              input.value = originalData.gender || "Male";
+            } else {
+              input.value = originalData[input.dataset.field] || "";
+            }
+            toggleError(input.dataset.field, false);
+          });
+          displayMode.style.display = "none";
+          editMode.style.display = "grid";
+        });
+
+        // Cancel edit
+        cancelBtn.addEventListener("click", () => {
+          displayMode.style.display = "grid";
+          editMode.style.display = "none";
+          originalData = {};
+          editMode.querySelectorAll(".error").forEach((error) => {
+            error.style.display = "none";
+          });
+        });
+
+        // Save changes
+        saveBtn.addEventListener("click", () => {
+          let isValid = true;
+          const newData = {};
+
+          editMode.querySelectorAll("[data-field]").forEach((input) => {
+            const field = input.dataset.field;
+            const value = input.value.trim();
+            newData[field] = value;
+            const valid = validateInput(field, value);
+            toggleError(field, !valid);
+            if (!valid) isValid = false;
+          });
+
+          if (isValid) {
+            // Format fields for display
+            newData.dob = formatDate(newData.dob);
+            // Update display
+            displayMode.querySelectorAll("[data-field]").forEach((span) => {
+              span.textContent = newData[span.dataset.field] || "";
+            });
+
+            displayMode.style.display = "grid";
+            editMode.style.display = "none";
+            originalData = {};
+          }
+        });
+      })();
+
+      // Initialize Chart.js
+      /*try {
+        const ctx = document.getElementById("progressChart").getContext("2d");
+        if (!ctx) throw new Error("Canvas context not found");
+        const progressChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`),
+            datasets: [
+              {
+                label: "Calories Burned",
+                data: [
+                  2400, 2500, 2400, 2300, 2600, 2700, 2500, 2800, 2600, 2700,
+                  1200, 2400, 2900, 3000, 2800, 2700, 2500, 2600, 2700, 2700,
+                  2800, 2900, 3000, 3100, 2700, 2800, 2800, 2700, 2700, 2800,
+                ],
+                backgroundColor: "rgba(34, 197, 94, 0.6)",
+                borderColor: "rgba(34, 197, 94, 1)",
+                borderWidth: 1,
+              },
+              {
+                label: "Calories Consumed",
+                data: [
+                  2500, 2100, 1900, 2200, 1900, 1800, 2100, 1900, 2100, 2000,
+                  2100, 1900, 1900, 1800, 2000, 2200, 1800, 1800, 2000, 1800,
+                  1900, 2000, 2100, 1900, 2100, 2800, 1900, 1800, 2800, 1800,
+                ],
+                backgroundColor: "rgba(255, 115, 95, 0.6)",
+                borderColor: "rgba(255, 115, 0, 1)",
+                borderWidth: 2,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            barPercentage: 0.3,
+            categoryPercentage: 0.35,
+            scales: {
+              y: {
+                beginAtZero: false,
+                title: {
+                  display: true,
+                  text: "Calories",
+                  font: { size: 12 },
+                },
+                ticks: {
+                  font: { size: 10 },
+                },
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: "Past 30 Days",
+                  font: { size: 12 },
+                },
+                ticks: {
+                  autoSkip: false,
+                  maxRotation: 45,
+                  minRotation: 45,
+                  font: { size: 9 },
+                },
+              },
+            },
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+                labels: {
+                  font: { size: 14 },
+                },
+              },
+            },
+          },
+        });
+      } catch (error) {
+        console.error("Error initializing Chart.js:", error);
+        const chartContainer =
+          document.getElementById("progressChart").parentElement;
+        chartContainer.innerHTML =
+          '<p style="color: #d32f2f; text-align: center;">Unable to load progress chart. Please try again later.</p>';
+      }*/
+    </script>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const burnLog =
+          JSON.parse(localStorage.getItem("calorieBurnLog")) || [];
+        const consumeLog =
+          JSON.parse(localStorage.getItem("calorieConsumedLog")) || [];
+
+        // 🧠 Combine both logs by date
+        const dates = new Set();
+
+        burnLog.forEach((entry) => dates.add(entry.date));
+        consumeLog.forEach((entry) => dates.add(entry.date));
+
+        const sortedDates = Array.from(dates).sort(); // ensure date order
+
+        const burnMap = {};
+        burnLog.forEach((entry) => {
+          burnMap[entry.date] = (burnMap[entry.date] || 0) + entry.calories;
+        });
+
+        const consumeMap = {};
+        consumeLog.forEach((entry) => {
+          consumeMap[entry.date] =
+            (consumeMap[entry.date] || 0) + entry.calories;
+        });
+
+        const caloriesBurned = sortedDates.map((date) => burnMap[date] || 0);
+        const caloriesConsumed = sortedDates.map(
+          (date) => consumeMap[date] || 0
+        );
+
+        const ctx = document.getElementById("progressChart").getContext("2d");
+        new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: sortedDates,
+            datasets: [
+              {
+                label: "Calories Burned",
+                data: caloriesBurned,
+                backgroundColor: "rgba(34, 197, 94, 0.6)",
+                borderColor: "rgba(34, 197, 94, 1)",
+                borderWidth: 1,
+              },
+              {
+                label: "Calories Consumed",
+                data: caloriesConsumed,
+                backgroundColor: "rgba(255, 115, 95, 0.6)",
+                borderColor: "rgba(255, 115, 0, 1)",
+                borderWidth: 2,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: "Calories",
+                },
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: "Date",
+                },
+              },
+            },
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+                labels: {
+                  font: { size: 14 },
+                },
+              },
+            },
+          },
+        });
+      });
+    </script>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        if (!user) {
+          // If no user, send back to login
+          alert("⚠️ Please login to access your profile.");
+          window.location.href = "Login.html";
+          return;
+        }
+
+        // Update profile fields
+        document.getElementById("username").textContent =
+          user.username || "N/A";
+        document.getElementById("email").textContent = user.email || "N/A";
+        document.getElementById("gender").textContent = user.gender || "N/A";
+        document.getElementById("dob").textContent = user.dob
+          ? new Date(user.dob).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })
+          : "N/A";
+        document.getElementById("phone").textContent = user.phone || "N/A";
+        document.getElementById("joined").textContent = user.joined
+          ? new Date(user.joined).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })
+          : "N/A";
+      });
+    </script>
+    <script>
+      function logout() {
+        // Clear all localStorage data
+        localStorage.removeItem("user");
+        localStorage.removeItem("calorieBurnLog");
+        localStorage.removeItem("calorieConsumedLog");
+
+        // Optional: clear everything
+        // localStorage.clear();
+
+        // Redirect to login page
+        window.location.href = "Login.html";
+      }
+    </script>
+  </body>
+</html>

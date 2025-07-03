@@ -1,0 +1,251 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color:#f7dbd9;
+  color: #b40b0b;
+}
+
+/* ---------------- Header/Navbar ---------------- */
+#navbar {
+  width: 100%;
+  position: relative;
+  z-index: 1000;
+  background: #fff; /* Match login page header background */
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 7%; /* Match login page nav padding */
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.logo {
+  width: 140px;
+}
+
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  list-style: none;
+  margin: 10px 20px; /* Match login page li margin */
+}
+
+nav ul li a {
+  color: #b40b0b;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 15px;
+  position: relative;
+}
+
+nav ul li a::after {
+  content: '';
+  width: 0;
+  height: 3px;
+  background: #444;
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  transition: 0.5s;
+}
+
+nav ul li a:hover::after {
+  width: 100%;
+}
+
+/* Optional: Style the .container if you keep it in HTML */
+.container {
+  width: 100%;
+  padding: 0;
+}
+
+/* ---------------- Main Content ---------------- */
+header {
+ background-color: rgba(255, 0, 43, 0.8);
+ /* Match login page footer color */
+  color: white;
+  text-align: center;
+  padding-top: 80px;
+  padding-bottom: 60px; /* Revert to original, as wave is outside header */
+}
+
+header h1 {
+  font-size: 3em;
+  margin: 0;
+}
+
+header p {
+  font-size: 1.2em;
+  margin-top: 10px;
+}
+
+.wah {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    background-color: #f7dbd9;;
+}
+
+.wah svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 78px;
+}
+
+.wah .shape-fill {
+    fill: #ff002b;
+    fill-opacity: 0.8;
+}
+section {
+  padding: 60px 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.about {
+  text-align: center;
+}
+
+.about h2 {
+  font-size: 2.2em;
+  margin-bottom: 20px;
+}
+
+.about p {
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+.values {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.value-card {
+  flex: 1 1 30%;
+  background-color: #f9f9f9; /* Lighter background to match login page aesthetic */
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.value-card h3 {
+  margin-bottom: 10px;
+}
+
+#team h2 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.team-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.team-container a {
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  background-color: #f9f9f9; /* Match value-card background */
+  border: 2px solid #b40b0b; /* Match login page accent color */
+  border-radius: 10px;
+  padding: 20px;
+  width: 200px;
+  text-align: center;
+  transition: all 0.3s ease;
+  transform: translateY(0);
+}
+
+.team-container a:hover {
+  background-color: #b40b0b; /* Match login page button color */
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.team-container a:hover h4,
+.team-container a:hover p {
+  color: white;
+}
+
+.team-container img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+/* Tooltip popup */
+.team-container a::after {
+  content: "View LinkedIn";
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #b40b0b; /* Match login page accent color */
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-size: 0.9em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.team-container a:hover::after {
+  opacity: 1;
+}
+
+footer {
+  background-color: #ff002b; /* Match login page footer */
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .values {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .value-card {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  nav ul li {
+    margin: 5px 10px;
+  }
+}

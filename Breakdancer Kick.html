@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise Instructions</title>
+  <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+    body{
+    background: #f7dbd9;
+    color: black;
+    }
+    #header {
+        width: 100%;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+    } 
+    
+    nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        position: fixed;       /* 👈 Fixed at the top */
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 10px 7%;
+        z-index: 1000;        
+    }
+    
+    .logo {
+        width: 140px;
+    }
+    
+    nav ul li{
+        display:inline-block;
+        list-style: none;
+        margin: 10px 20px;
+    }
+    nav ul li a{
+        color:#b40b0b;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 15px;
+        position: relative;
+    }
+    nav ul li a::after{
+        content: '';
+        width: 0;
+        height:3px;
+        background: #444;
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        transition: 0.5s;
+    }
+    nav ul li a:hover::after{
+        width:100%;
+    }
+    
+
+    .exercise-section {
+      display: flex;
+      padding: 40px;
+      gap: 20px;
+      background-color:  #f7dbd9;
+      margin-top: 80px;
+    }
+    .instruction {
+        flex: 0 0 58%;
+        padding: 40px 90px 30px 30px; /* top right bottom left */
+        background-color: #f7dbd9;
+        border-radius: 10px;
+    }
+
+    .instruction h2 {
+      margin-top: 0;
+      font-size: 24px;
+      color: #b40b0b;
+    }
+
+    .instruction p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #555;
+    }
+    .instruction ol {
+      margin-left: 20px;
+      line-height: 1.8;
+      color: #555;
+    }
+    .instruction li {
+      margin-bottom: 10px;
+    }
+
+
+    .exercise-image {
+      flex: 1;
+      overflow: hidden;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      background-color: #fafafa;
+    }
+
+    .exercise-image img {
+      width: 100%;
+      height: 400px;
+      border-radius: 15px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    @media (max-width: 768px) {
+      .exercise-section {
+        flex-direction: column;
+      }
+
+      .instruction, .exercise-image {
+        flex: 1 1 100%;
+      }
+    }
+
+.wae{
+  position: relative;
+  width: 100%;
+  overflow: visible;
+  line-height: 0;
+  transform: rotate(180deg); /* This flips it */
+  z-index: 0;
+}
+
+.wae svg {
+  position: relative;
+  display: block;
+  width: calc(137% + 1.3px);
+  height: 92px;
+}
+
+.wae .shape-fill {
+  fill:  #fafafa;
+}
+
+.breathing-section {
+  background-color: #fafafa;
+  padding: 40px 60px 10px 60px; /* ⬅️ reduced bottom padding */
+  margin-bottom: 0; /* ⬅️ ensure no extra bottom margin */
+}
+
+
+.breathing-text {
+  background-color:#fafafa;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.breathing-text h2 {
+  color: #b40b0b;
+  margin-bottom: 15px;
+}
+
+.breathing-text p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #555;
+}
+
+.wab {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+  line-height: 0;
+  transform: rotate(180deg);
+  z-index: 0;
+  background-color: #fafafa;
+  margin-bottom: 0; /* 👈 Add this */
+  padding-bottom: 0; /* 👈 Add this */
+}
+
+.wab svg {
+  position: relative;
+  display: block;
+  width: calc(137% + 1.3px);
+  height: 92px;
+}
+
+.wab .shape-fill {
+  fill: #f7dbd9;
+}
+.video-section {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 40px;
+  background-color: #f7dbd9;
+  margin-top: 20px;
+}
+
+.video-container {
+  flex: 0 0 38%;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.video-container iframe {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+}
+
+.video-text {
+  flex: 1;
+  padding: 30px;
+  background-color: #f7dbd9;
+  border-radius: 10px;
+}
+
+.video-text h2 {
+  color: #b40b0b;
+  margin-bottom: 10px;
+}
+
+.video-text p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #555;
+}
+.video-text ol {
+  margin-left: 20px;
+  line-height: 1.8;
+  color: #555;
+}
+.video-text li {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .video-section {
+    flex-direction: column;
+  }
+
+  .video-container, .video-text {
+    flex: 1 1 100%;
+  }
+}
+footer {
+  background-color: #b40b0b;
+  color: white;
+  text-align: center;
+  margin-top: 35px;
+  padding: 20px;
+}
+  </style>
+</head>
+<body>
+    <div id="header">   
+        <div class="container">
+          <nav>
+            <img src="images/mainlogo.png" alt="Fitmax" class="logo">
+            <ul>
+              <li><a href="Home.html"> Home </a></li>
+              <li><a href="Exercises.html"> Exercises </a></li>
+              <li><a href="Diet.html"> Diet tracker </a></li>
+              <li><a href="Aboutus.html"> About us </a></li>
+              <li><a href="Profile.html"> Profile </a></li>
+              <li><a href="Login.html"> Login </a></li>
+            </ul>
+          </nav>  
+        </div>
+    </div>
+    <div class="exercise-section">
+     <div class="instruction">
+      <h2>How to Do a Breakdancer Kick</h2>
+      <ol style="margin-top: 10px; margin-bottom: 20px; padding-left: 5px;">
+        <li>Start in a crouched position with your hands on the floor for balance.</li>
+        <li>Kick one leg out to the side while twisting your torso in the opposite direction.</li>
+        <li>Return to the starting position and repeat on the other side.</li>
+      </ol>
+
+      <h2>Muscles Affected</h2><br>
+      <p><b>Primary muscles:</b>Core, hip flexors, glutes</p>
+      <p><b>Secondary muscles:</b>upper back</p>
+      <p><b>Equipment:</b>None</p>
+    </div>
+
+
+    <div class="exercise-image">
+      <img src="images/Breakdancer Kick.png" alt="Band Reverse Plank">
+    </div>
+  </div>
+
+  <div class="wae">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+        </svg>
+  </div>
+        
+  <div class="breathing-section">
+  <div class="breathing-text">
+    <h2>Proper Form And Breathing Pattern</h2>
+    <p>Keep your core engaged throughout the movement.
+Exhale as you kick your leg out.
+Inhale as you return to the starting position.</p>
+    <br><h2>Sets And Reps</h2>
+    <p>Do 2–3 sets of 12–15 reps per side.
+</p>
+    </div>
+ </div>
+
+  <div class="wab">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+        </svg>
+  </div>
+        
+  <div class="video-section">
+  <div class="video-container">
+    <iframe src="images/break-dancer-kick-demo.mp4" allowfullscreen></iframe>
+  </div>
+  <div class="video-text">
+    <h2>Benefits of Breakdancer Kick</h2>
+    <ol style="margin-top: 10px; margin-bottom: 20px; padding-left: 5px;">
+      <li> Improves core strength and rotational mobility, enhancing overall athleticism.</li>
+
+<li> Boosts coordination and balance by integrating dynamic full-body movement.</li>
+    </ol>
+  </div>
+</div>
+
+    <footer>
+        &copy; 2025 Diet Tracker. All rights reserved.
+    </footer>
+
+</body>
+</html>

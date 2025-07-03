@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fitness Website</title>
+    <link rel="stylesheet" href="exercisesstyles.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <div id="header">
+      <div class="container">
+        <nav>
+          <img src="images/mainlogo.png" alt="Fitmax" class="logo" />
+          <ul>
+            <li><a href="Home.html">Home</a></li>
+            <li><a href="Exercises.html">Exercises</a></li>
+            <li><a href="Diet.html">Diet tracker</a></li>
+            <li><a href="Aboutus.html">About us</a></li>
+            <li><a href="Profile.html">Profile</a></li>
+            <li><a href="Login.html">Login</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <div class="hero-content">
+        <h1>Get fit with us</h1>
+        <p>Pilates, Yoga, Fitness, Spinning & more</p>
+      </div>
+    </div>
+
+    <!-- Wave after Hero Section -->
+    <div class="wah">
+      <svg
+        data-name="Layer 1"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 120"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+          class="shape-fill"
+        ></path>
+      </svg>
+    </div>
+
+    <!-- Exercise Section -->
+    <div class="exercise-section">
+      <div class="exercise-header">
+        <h2><b>Exercise Guide</b></h2>
+      </div>
+      <div class="exercise-grid">
+        <a href="Biceps.html" class="exercise-box">
+          <img src="images/bicep-curl.png" alt="Biceps exercise" />
+          <h2>Biceps</h2>
+        </a>
+        <a href="triceps.html" class="exercise-box">
+          <img src="images/triceps.png" alt="Triceps exercise" />
+          <h2>Triceps</h2>
+        </a>
+        <a href="shoulders.html" class="exercise-box">
+          <img src="images/shoulder.png" alt="Shoulders exercise" />
+          <h2>Shoulders</h2>
+        </a>
+        <a href="chest.html" class="exercise-box">
+          <img src="images/chest.png" alt="Chest exercise" />
+          <h2>Chest</h2>
+        </a>
+        <a href="back.html" class="exercise-box">
+          <img src="images/back.png" alt="Back exercise" />
+          <h2>Back</h2>
+        </a>
+        <a href="glutes-hip-flexors.html" class="exercise-box">
+          <img src="images/glutes.png" alt="Glutes exercise" />
+          <h2>Glutes & Hip Flexors</h2>
+        </a>
+      </div>
+    </div>
+
+    <!-- Wave after Exercise Section -->
+    <div class="wae">
+      <svg
+        data-name="Layer 1"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 120"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+          class="shape-fill"
+        ></path>
+      </svg>
+    </div>
+
+    <!-- Calorie Calculator Section -->
+    <div class="container">
+      <div class="grid">
+        <!-- Left Column: Heading and Description -->
+        <div class="left-column">
+          <h1 class="heading">Calories Burned Calculator</h1>
+          <p class="description">
+            Quickly estimate the calories burned during your workout. Choose an
+            exercise, enter your weight and duration to track your fitness
+            progress with FitMax.
+          </p>
+        </div>
+        <!-- Right Column: Calculator -->
+        <div class="right-column">
+          <div class="calculator-card">
+            <div class="form-group">
+              <label for="category" class="form-label"
+                >Select Exercise Category:</label
+              >
+              <select
+                id="category"
+                class="form-select"
+                onchange="updateExercises()"
+              >
+                <option value="" disabled selected>Select a category</option>
+                <option value="biceps">Biceps</option>
+                <option value="triceps">Triceps</option>
+                <option value="shoulders">Shoulders</option>
+                <option value="chest">Chest</option>
+                <option value="back">Back</option>
+                <option value="glutes">Glutes and Hip Flexors</option>
+              </select>
+            </div>
+            <div id="exercise-container" class="form-group hidden">
+              <label for="exercise" class="form-label">Select Exercise:</label>
+              <select id="exercise" class="form-select">
+                <!-- Options populated by JavaScript -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="weight" class="form-label">Weight:</label>
+              <div class="flex">
+                <input
+                  type="number"
+                  id="weight"
+                  class="form-input"
+                  placeholder="Enter weight"
+                  min="1"
+                />
+                <select id="weightUnit" class="weight-unit-select">
+                  <option value="kg">kg</option>
+                  <option value="lbs">lbs</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="duration" class="form-label"
+                >Duration (minutes):</label
+              >
+              <input
+                type="number"
+                id="duration"
+                class="form-input"
+                placeholder="Enter duration"
+                min="1"
+              />
+            </div>
+            <button onclick="calculateCalories()" class="calculate-button">
+              Calculate
+            </button>
+            <div id="result" class="result"></div>
+            <p class="note">
+              Note: This is an estimate based on MET values. Actual calories
+              burned may vary.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wave after Calculator Section -->
+    <div class="wac">
+      <svg
+        data-name="Layer 1"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 120"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+          class="shape-fill"
+        ></path>
+      </svg>
+    </div>
+
+    <!-- Workout Routines Section -->
+    <div class="workout-wrapper">
+      <!-- Section Heading -->
+      <div class="lower-section-header">
+        <h2>Workout Routines</h2>
+      </div>
+
+      <!-- Lower Section -->
+      <div class="lower-section">
+        <a href="upper-body.html" class="category-box">
+          <h2>UPPER BODY</h2>
+          <p>Build strength and tone your upper body.</p>
+        </a>
+        <a href="lower-body.html" class="category-box">
+          <h2>LOWER BODY</h2>
+          <p>Work on your legs and core strength.</p>
+        </a>
+        <a href="yoga.html" class="category-box">
+          <h2>YOGA</h2>
+          <p>Improve flexibility and relaxation.</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>© 2025 Fitmaxx. All rights reserved.</footer>
+
+    <script>
+      const exerciseData = {
+        biceps: [
+          { name: "Band Reverse Curl", met: 4.0 },
+          { name: "Biceps Curl", met: 4.0 },
+          { name: "Bicep Stretch", met: 2.5 },
+          { name: "Concentration Curl", met: 4.0 },
+          { name: "Cross Chest Curl", met: 4.0 },
+          { name: "Hammer Curl", met: 4.0 },
+        ],
+        triceps: [
+          { name: "Butterfly Dips", met: 5.0 },
+          { name: "Dumbbell Triceps Extension", met: 4.0 },
+          { name: "Triceps Stretch", met: 2.5 },
+          { name: "Tricep Kickback", met: 4.0 },
+          { name: "One Arm Tricep Push Up", met: 6.0 },
+          { name: "Triceps Dips", met: 5.0 },
+        ],
+        shoulders: [
+          { name: "Arm Circle", met: 3.5 },
+          { name: "Arnold Shoulder Press", met: 4.5 },
+          { name: "Dumbbell Bent Over Row", met: 4.5 },
+          { name: "Breakdancer Kick", met: 7.0 },
+          { name: "Bent Over Lateral Raise", met: 4.5 },
+          { name: "Bear Walk", met: 6.0 },
+        ],
+        chest: [
+          { name: "Ankle Tap Push Up", met: 6.0 },
+          { name: "Chest Fly", met: 4.5 },
+          { name: "Decline Push Up", met: 6.0 },
+          { name: "Chest Stretch", met: 2.5 },
+          { name: "Asymmetrical Push Up", met: 6.0 },
+          { name: "Chest Press", met: 4.5 },
+        ],
+        back: [
+          { name: "Alternating Superman", met: 4.0 },
+          { name: "Back Stretch", met: 2.5 },
+          { name: "Crab Kicks", met: 6.0 },
+          { name: "Cobra Lat Pulldown", met: 4.5 },
+          { name: "Back Extensions", met: 4.0 },
+          { name: "Bird Dogs", met: 4.0 },
+        ],
+        glutes: [
+          { name: "Advanced Bridge", met: 5.0 },
+          { name: "Band Reverse Plank", met: 5.0 },
+          { name: "Boxer Squat Punch", met: 7.0 },
+          { name: "Burpees", met: 8.0 },
+          { name: "Band Kickback", met: 5.0 },
+          { name: "Booty Squeeze", met: 4.5 },
+        ],
+      };
+
+      function updateExercises() {
+        const category = document.getElementById("category").value;
+        const exerciseSelect = document.getElementById("exercise");
+        const exerciseContainer = document.getElementById("exercise-container");
+        exerciseSelect.innerHTML = "";
+
+        if (category) {
+          exerciseContainer.classList.remove("hidden");
+          const defaultOption = document.createElement("option");
+          defaultOption.value = "";
+          defaultOption.textContent = "Select an exercise";
+          defaultOption.disabled = true;
+          defaultOption.selected = true;
+          exerciseSelect.appendChild(defaultOption);
+
+          exerciseData[category].forEach((ex) => {
+            const option = document.createElement("option");
+            option.value = ex.met;
+            option.textContent = ex.name;
+            exerciseSelect.appendChild(option);
+          });
+        } else {
+          exerciseContainer.classList.add("hidden");
+        }
+      }
+
+      function calculateCalories() {
+        const exercise = document.getElementById("exercise").value;
+        let weight = parseFloat(document.getElementById("weight").value);
+        const weightUnit = document.getElementById("weightUnit").value;
+        const duration = parseFloat(document.getElementById("duration").value);
+        const resultDiv = document.getElementById("result");
+
+        if (!exercise || !weight || weight <= 0 || !duration || duration <= 0) {
+          resultDiv.innerHTML =
+            '<span class="error-text">Please select a category, exercise, and enter valid weight and duration.</span>';
+          return;
+        }
+        const metValues = {
+          // Example MET values — adjust as needed
+          BicepCurls: 3.8,
+          PushUps: 8.0,
+          Squats: 5.0,
+          // Add more if needed
+        };
+
+        const met = metValues[exercise] || 5.0;
+
+        const weightInKg = weightUnit === "lbs" ? weight * 0.453592 : weight;
+        const caloriesBurned = ((met * weightInKg * 3.5) / 200) * duration;
+
+        const roundedCalories = Math.round(caloriesBurned);
+        document.getElementById(
+          "result"
+        ).innerText = `Estimated Calories Burned: ${roundedCalories}`;
+
+        // ⭐ Save to localStorage with today's date
+        const logs = JSON.parse(localStorage.getItem("calorieBurnLog")) || [];
+
+        logs.push({
+          date: new Date().toISOString().split("T")[0], // e.g. "2025-06-02"
+          calories: roundedCalories,
+        });
+
+        localStorage.setItem("calorieBurnLog", JSON.stringify(logs));
+
+        if (weightUnit === "lbs") {
+          weight = weight / 2.20462;
+        }
+
+        const calories =
+          (duration * (parseFloat(exercise) * 3.5 * weight)) / 200;
+        resultDiv.innerHTML = `You burned approximately <span class="error-text">${calories.toFixed(
+          2
+        )}</span> calories.`;
+      }
+
+      window.onload = updateExercises;
+    </script>
+  </body>
+</html>

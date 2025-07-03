@@ -1,0 +1,128 @@
+body {
+            background-color: rgb(236, 222, 215);
+        }
+        main {
+            background-image: url('https://images.unsplash.com/photo-1553356087-58b4d2f43226');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+        main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(236, 222, 215, 0.3); /* Light peach overlay */
+            z-index: 1;
+        }
+        .button-container {
+            position: relative;
+            z-index: 2; /* Ensure buttons are above overlay */
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            overflow-y: auto;
+        }
+        .modal.show {
+            display: block;
+        }
+        .modal-content {
+            background: rgb(236, 222, 215);
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 800px;
+            position: relative;
+        }
+        footer {
+            background-color: #c06d6d;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        #top-bar {
+            background-color: #c06d6d;
+            padding: 10px 0;
+        }
+        .top-bar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .nav-container {
+            max-width: 600px; /* Reduced width for nav */
+            display: flex;
+            justify-content: flex-end; /* Align to right for main page */
+        }
+        nav ul {
+            display: flex;
+            gap: 15px; /* Reduced gap for smaller width */
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .top-bar-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .nav-container {
+                width: 100%;
+                justify-content: center;
+            }
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 10px;
+                text-align: center;
+            }
+            .logo {
+                margin-bottom: 10px;
+            }
+        }
+        .calculator-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .calculator-inputs label {
+            font-weight: bold;
+        }
+        .calculator-inputs input, .calculator-inputs select {
+            padding: 8px;
+            border: 1px solid #c06d6d;
+            border-radius: 4px;
+            width: 100px;
+        }
+        .calculator-result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
